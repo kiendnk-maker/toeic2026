@@ -1285,6 +1285,37 @@ function results(){
     document.getElementById("debriefWrap").style.display="block";
     _submitAndDebrief(pre, post);
   };
+
+  // If this participant already submitted, resume cached Mentor debrief immediately.
+  const existingSid = participantId ? localStorage.getItem("toeic_session_id_" + participantId) : null;
+  if (existingSid) {
+    const sb=document.getElementById("submitBtn");
+    sb.disabled=true;sb.textContent="Đã gửi — đang mở nhận xét…";
+    document.getElementById("debriefWrap").style.display="block";
+    _streamDebrief(existingSid);
+  }
+}
+
+function _streamDebrief(session_id) {
+  const body = document.getElementById("debriefBody");
+  if (!body || !session_id) return;
+  body.innerHTML = "";
+
+  const evts = new EventSource(API_BASE + "/api/debrief/" + session_id);
+  let text = "";
+  evts.onmessage = (e) => {
+    if (e.data === "[DONE]") { evts.close(); _renderDebrief(body, text); return; }
+    try {
+      const {text: chunk} = JSON.parse(e.data);
+      text += chunk;
+      body.textContent = text;   // live update
+      body.scrollIntoView({behavior:"smooth",block:"nearest"});
+    } catch(_) {}
+  };
+  evts.onerror = () => {
+    evts.close();
+    if (!text) body.innerHTML = `<span style="color:var(--slate)">Mentor tạm thời chưa phản hồi — thử lại sau.</span>`;
+  };
 }
 
 async function _submitAndDebrief(pre, post) {
@@ -1310,25 +1341,7 @@ async function _submitAndDebrief(pre, post) {
     localStorage.setItem("toeic_scores_" + participantId, JSON.stringify({pre: Math.round(preScore), post: Math.round(postScore), practice: score}));
 
     // 2. Stream debrief via SSE
-    const body = document.getElementById("debriefBody");
-    if (!body) return;
-    body.innerHTML = "";
-
-    const evts = new EventSource(API_BASE + "/api/debrief/" + session_id);
-    let text = "";
-    evts.onmessage = (e) => {
-      if (e.data === "[DONE]") { evts.close(); _renderDebrief(body, text); return; }
-      try {
-        const {text: chunk} = JSON.parse(e.data);
-        text += chunk;
-        body.textContent = text;   // live update
-        body.scrollIntoView({behavior:"smooth",block:"nearest"});
-      } catch(_) {}
-    };
-    evts.onerror = () => {
-      evts.close();
-      if (!text) body.innerHTML = `<span style="color:var(--slate)">Mentor tạm thời chưa phản hồi — thử lại sau.</span>`;
-    };
+    _streamDebrief(session_id);
   } catch(e) {
     const body = document.getElementById("debriefBody");
     if (body) body.innerHTML = `<span style="color:var(--slate)">Không kết nối được Mentor (${e.message}).</span>`;

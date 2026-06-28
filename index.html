@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOEIC Campus Sprint — Luyện phản xạ ngữ pháp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --ink:#1f2a44; --ink-soft:#52627d; --paper:#fff8ee; --card:#ffffff; --line:#eadfce;
+    --cue:#ff8a3d; --cue-wash:#fff0df; --go:#17a878; --go-wash:#e8f8f1;
+    --stop:#e74c3c; --stop-wash:#ffebe7; --slate:#8a96a8; --blue:#2563eb; --blue-wash:#eaf1ff;
+    --pink:#f05a8a; --mint:#38c6a3; --shadow:0 14px 35px -24px rgba(31,42,68,.45),0 2px 0 rgba(31,42,68,.04);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100%;overflow-x:hidden}
+  body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;display:flex;justify-content:center;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(255,138,61,.20), transparent 28%),
+      radial-gradient(circle at 85% 12%, rgba(37,99,235,.14), transparent 32%),
+      linear-gradient(135deg,#fff8ee 0%,#f7fbff 54%,#fff2e8 100%)}
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(31,42,68,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(31,42,68,.035) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+  .app{width:100%;max-width:820px;min-height:100vh;display:flex;flex-direction:column;padding:0 18px 40px;position:relative}
+  .bar{position:sticky;top:0;z-index:20;background:rgba(255,248,238,.82);backdrop-filter:blur(14px);border:1px solid rgba(234,223,206,.7);border-top:none;border-radius:0 0 22px 22px;padding:13px 14px;display:flex;align-items:center;gap:10px;margin-bottom:24px;box-shadow:0 14px 35px -30px rgba(31,42,68,.4)}
+  .logo{font-family:'Space Grotesk';font-weight:800;letter-spacing:-.04em;font-size:18px}.logo small{color:var(--cue);font-weight:700}.phase{font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--ink);border-radius:999px;padding:5px 10px}.spacer{flex:1}
+  .stat{font-family:'IBM Plex Mono';font-size:11px;color:var(--ink-soft);display:flex;gap:5px;align-items:baseline;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 9px}.stat b{font-size:15px;color:var(--cue);font-weight:700}.infobtn{border:1px solid var(--line);background:var(--card);border-radius:12px;width:32px;height:32px;cursor:pointer;font-weight:800;color:var(--ink);font-family:'Space Grotesk'}
+  .scene{flex:1;display:flex;flex-direction:column;animation:rise .45s cubic-bezier(.2,.7,.2,1)}@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .eyebrow{font-family:'IBM Plex Mono';font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cue);font-weight:800;margin-bottom:14px}h1{font-family:'Space Grotesk';font-weight:800;font-size:clamp(34px,7vw,58px);line-height:.98;letter-spacing:-.055em;margin-bottom:16px}h1 .am{color:var(--blue)}.lede{font-size:17px;color:var(--ink-soft);max-width:58ch;margin-bottom:26px}.lede b{color:var(--ink)}
+  .boss{display:flex;align-items:center;gap:15px;background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:22px;padding:16px 18px;box-shadow:var(--shadow);margin-bottom:20px}.avatar{width:58px;height:58px;flex:none;border-radius:18px;background:linear-gradient(135deg,var(--blue),var(--cue));position:relative;overflow:hidden;transition:background .4s}.avatar svg{position:absolute;inset:0}.bubble{flex:1}.bubble .who{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:2px;display:flex;align-items:center;gap:8px}.bubble .say{font-size:15.5px;color:var(--ink);min-height:22px}.waiting{display:inline-flex;gap:3px;align-items:center}.waiting i{width:5px;height:5px;border-radius:50%;background:var(--cue);animation:wpulse 1.2s infinite}.waiting i:nth-child(2){animation-delay:.2s}.waiting i:nth-child(3){animation-delay:.4s}@keyframes wpulse{0%,100%{opacity:.25}50%{opacity:1}}
+  .qcard{background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:var(--shadow)}.qctx{font-family:'IBM Plex Mono';font-size:12px;color:var(--blue);margin-bottom:14px;letter-spacing:.02em;text-transform:uppercase}.stem{font-size:21px;font-weight:650;letter-spacing:-.015em;margin-bottom:22px;line-height:1.5}.blank{display:inline-block;min-width:88px;border-bottom:3px solid var(--cue);text-align:center;color:var(--cue);font-weight:800}.filled{display:inline-block;min-width:62px;border-bottom:3px solid var(--stop);text-align:center;color:var(--stop);font-weight:800;text-decoration:line-through;margin:0 4px}.correct-fill{display:inline-block;min-width:62px;border-bottom:3px solid var(--go);text-align:center;color:var(--go);font-weight:900;margin:0 4px;background:var(--go-wash);border-radius:8px 8px 0 0;padding:0 4px}.opts{display:grid;gap:11px}.opt{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);background:#fffaf4;border-radius:16px;padding:14px 15px;cursor:pointer;font-size:16px;text-align:left;transition:.15s;font-family:inherit;color:var(--ink);width:100%;box-shadow:0 2px 0 rgba(31,42,68,.03)}.opt:hover:not(:disabled){border-color:var(--cue);transform:translateX(3px)}.opt:disabled{cursor:default}.opt .key{font-family:'IBM Plex Mono';font-size:13px;color:var(--ink-soft);border:1px solid var(--line);border-radius:10px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex:none;background:white}.opt.correct{border-color:var(--go);background:var(--go-wash)}.opt.correct .key{border-color:var(--go);color:var(--go)}.opt.wrong{border-color:var(--stop);background:var(--stop-wash)}.opt.wrong .key{border-color:var(--stop);color:var(--stop)}.shake{animation:shake .4s}@keyframes shake{0%,100%{transform:none}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+  .gate{margin-top:12px;border:1.5px solid var(--stop);background:linear-gradient(135deg,var(--stop-wash),#fff);border-radius:20px;padding:14px;animation:rise .4s;box-shadow:var(--shadow)}.rule-preview{margin:12px 0 12px;padding:14px 15px;border-radius:16px;background:linear-gradient(135deg,var(--blue-wash),#fff);border:1.5px solid rgba(37,99,235,.35);box-shadow:0 10px 25px -22px var(--blue)}.rule-preview.hide{display:none}.rule-preview-kicker{font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);font-weight:800;margin-bottom:5px}.rule-preview-text{font-size:15px;line-height:1.55;color:var(--ink);font-weight:650}.gate.solved{border-color:var(--go);background:linear-gradient(135deg,var(--go-wash),#fff)}.gate h3{font-family:'Space Grotesk';font-size:18px;letter-spacing:-.02em;margin-bottom:6px;display:flex;align-items:center;gap:8px}.lock-tag{font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--stop);border-radius:999px;padding:3px 8px}.lock-tag.go{background:var(--go)}.prompt{font-size:15px;color:var(--ink-soft);margin-bottom:4px}.badsent{font-size:17px;font-weight:650;margin:10px 0 4px;line-height:1.5}.reveal{margin-top:16px;padding-top:16px;border-top:1px dashed rgba(23,168,120,.5);animation:rise .4s}.reveal .lab{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--go);margin-bottom:8px}.rule{font-size:16px;line-height:1.6}.hl{background:var(--cue);color:#fff;border-radius:8px;padding:2px 8px;font-weight:800;font-family:'IBM Plex Mono';font-size:14px}.nudge{margin-top:14px;font-size:14px;color:var(--ink-soft);background:var(--cue-wash);border:1px dashed var(--cue);border-radius:14px;padding:12px 14px;animation:rise .35s}.nudge b{color:var(--ink)}
+.cue-card{margin:12px 0 8px;padding:14px 16px;border-radius:16px;background:linear-gradient(135deg,var(--blue-wash),#fff);border:1.5px solid rgba(37,99,235,.4);box-shadow:0 10px 25px -22px var(--blue);animation:rise .35s}.cue-kicker{font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);font-weight:800;margin-bottom:6px}.cue-text{font-size:16px;line-height:1.55;color:var(--ink);font-weight:650}
+  .micwrap{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:10px}.orb{width:68px;height:68px;border-radius:24px;border:none;cursor:pointer;position:relative;background:linear-gradient(135deg,var(--blue),var(--ink));color:#fff;display:flex;align-items:center;justify-content:center;transition:.25s;box-shadow:0 18px 30px -22px var(--blue)}.orb:hover{transform:scale(1.04) rotate(-1deg)}.orb svg{width:28px;height:28px}.orb.live{background:linear-gradient(135deg,var(--stop),var(--pink))}.orb.live::before,.orb.live::after{content:'';position:absolute;inset:0;border-radius:32px;border:2px solid var(--stop);animation:ping 1.6s ease-out infinite}.orb.live::after{animation-delay:.8s}@keyframes ping{from{transform:scale(1);opacity:.7}to{transform:scale(1.55);opacity:0}}.orb.ok{background:var(--go)}.orb.processing{background:var(--cue);cursor:wait}.orb.processing::before{content:'';position:absolute;inset:0;border-radius:32px;border:2px solid var(--cue);animation:ping 1s ease-out infinite}.miclabel{font-size:14px;color:var(--ink-soft);text-align:center;min-height:0}.miclabel:empty{display:none}.transcript{display:none}.transcript.empty{display:none}.verdict{font-family:'IBM Plex Mono';font-size:13px;letter-spacing:.04em;min-height:18px;text-align:center}.verdict.good{color:var(--go)}.verdict.bad{color:var(--stop)}
+  .btnrow{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}.btn{font-family:'Space Grotesk';font-weight:800;font-size:15px;border:none;border-radius:16px;padding:14px 22px;cursor:pointer;transition:.18s;letter-spacing:-.01em}.btn.primary{background:linear-gradient(135deg,var(--blue),var(--ink));color:#fff}.btn.primary:hover{transform:translateY(-2px);box-shadow:0 16px 25px -18px var(--blue)}.btn.primary:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}.btn.ghost{background:#fff;color:var(--ink-soft);border:1.5px solid var(--line)}.btn.ghost:hover{border-color:var(--cue);color:var(--ink)}.btn.amber{background:var(--cue);color:#fff}.btn.amber:hover{transform:translateY(-1px)}.tiny{font-size:12.5px;color:var(--slate);margin-top:10px;font-family:'IBM Plex Mono'}.center{text-align:center}
+  .groups{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px}@media(max-width:560px){.groups{grid-template-columns:1fr}}.gcard{border:2px solid var(--line);border-radius:22px;padding:20px;cursor:pointer;background:rgba(255,255,255,.92);transition:.18s;box-shadow:var(--shadow)}.gcard:hover{border-color:var(--cue);transform:translateY(-2px)}.gcard.sel{border-color:var(--cue);background:var(--cue-wash)}.gcard .gt{font-family:'Space Grotesk';font-weight:800;font-size:18px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between}.gcard .pill{font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--blue);border-radius:999px;padding:3px 8px}.gcard .gd{font-size:14px;color:var(--ink-soft)}
+  .dots{display:flex;gap:6px;margin-bottom:20px}.dot{height:6px;flex:1;border-radius:999px;background:var(--line);transition:.3s}.dot.done{background:var(--cue)}.dot.now{background:var(--blue)}.scoregrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:6px 0 24px}@media(max-width:560px){.scoregrid{grid-template-columns:1fr}}.scell{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;text-align:center;box-shadow:var(--shadow)}.scell .n{font-family:'Space Grotesk';font-weight:800;font-size:36px;letter-spacing:-.03em;color:var(--blue)}.scell .l{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);margin-top:4px}.scell.delayed{border-style:dashed;border-color:var(--cue);background:var(--cue-wash)}.scell.delayed .n{color:var(--cue)}.paas{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:18px;box-shadow:var(--shadow)}.paas .pq{font-size:15.5px;margin-bottom:12px;font-weight:650}.scale{display:flex;gap:5px}.sb{flex:1;aspect-ratio:1;border:1.5px solid var(--line);background:#fffaf4;border-radius:10px;cursor:pointer;font-family:'IBM Plex Mono';font-size:13px;color:var(--ink-soft);transition:.12s}.sb:hover{border-color:var(--cue)}.sb.sel{background:var(--ink);color:#fff;border-color:var(--ink)}.scaleends{display:flex;justify-content:space-between;font-size:11px;color:var(--slate);margin-top:6px;font-family:'IBM Plex Mono'}
+  .research{border:1px solid var(--line);border-radius:20px;background:#fff;overflow:hidden;margin-bottom:18px;box-shadow:var(--shadow)}.rhead{padding:14px 18px;font-family:'Space Grotesk';font-weight:800;font-size:14px;background:var(--ink);color:#fff;display:flex;align-items:center;gap:8px}.rbody{padding:6px 18px 14px}.rrow{padding:13px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:130px 1fr;gap:14px;align-items:start}.rrow:last-child{border-bottom:none}.rterm{font-family:'IBM Plex Mono';font-size:12px;color:var(--cue);font-weight:700;letter-spacing:.02em;line-height:1.4}.rdesc{font-size:13.5px;color:var(--ink-soft)}
+  .debrief-wrap{margin:0 0 22px;border:1.5px solid var(--blue);border-radius:24px;overflow:hidden;box-shadow:var(--shadow);background:#fff}.debrief-head{background:linear-gradient(135deg,var(--blue),var(--ink));color:#fff;padding:13px 18px;display:flex;align-items:center;gap:10px}.debrief-logo{font-family:'Space Grotesk';font-weight:800;font-size:15px;letter-spacing:-.01em}.debrief-tag{font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.75;border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:2px 8px}.debrief-body{padding:18px;font-size:15px;line-height:1.7;color:var(--ink);background:#fff;min-height:60px}.debrief-body p{margin:0 0 10px}.debrief-body p:last-child{margin-bottom:0}.debrief-loading{color:var(--slate);font-size:14px;display:flex;align-items:center;gap:8px}
+  @media(max-width:560px){.app{padding:0 12px 30px}.bar{gap:7px;padding:10px 10px;margin-bottom:14px}.logo{font-size:16px}.phase{font-size:9px}.stat{display:none!important}.qcard{padding:16px}.stem{font-size:18px;margin-bottom:16px}.gate{padding:12px;margin-top:10px}.gate h3{font-size:16px;align-items:flex-start}.prompt{font-size:14px}.badsent{font-size:15.5px;margin:8px 0 2px}.orb{width:62px;height:62px;border-radius:22px}.verdict{min-height:0;font-size:12px}.btnrow{gap:8px;margin-top:12px}.btn{width:100%;justify-content:center;padding:12px 16px}.rrow{grid-template-columns:1fr}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  /* ── compact demographics survey (mobile-first) ─────────────── */
+  .demo{padding:18px 16px}.demo-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed rgba(31,42,68,.08)}.demo-row:last-of-type{border-bottom:none}.demo-q{flex:1;font-size:15px;color:var(--ink);font-weight:600}.demo-age{font-family:'IBM Plex Mono';font-size:18px;font-weight:700;text-align:center;width:70px;padding:8px 6px;border:1.5px solid var(--line);border-radius:10px;background:#fff}.demo-age:focus{outline:none;border-color:var(--cue)}.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;max-width:60%}.chip{font-family:'Space Grotesk';font-weight:600;font-size:13.5px;padding:8px 12px;border:1.5px solid var(--line);background:#fff;border-radius:999px;cursor:pointer;color:var(--ink);transition:.12s;line-height:1}.chip:hover{border-color:var(--cue)}.chip.sel{background:var(--ink);color:#fff;border-color:var(--ink)}.demo-warn{display:none;color:var(--stop);font-weight:700;font-size:13px;margin-top:8px;text-align:center}.demo-go{width:100%}@media(max-width:560px){.demo-row{flex-direction:column;align-items:flex-start;gap:8px}.demo-q{font-size:14px}.chips{max-width:100%;justify-content:flex-start}.demo-age{width:90px;font-size:17px;padding:8px 4px}}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="bar">
+    <div class="logo">TOEIC Campus <small>/ Sprint</small></div>
+    <div class="phase" id="phaseTag">Bắt đầu</div>
+    <div class="spacer"></div>
+    <div class="stat" id="scoreStat" style="display:none"><span>điểm</span><b id="scoreVal">0</b></div>
+    <div class="stat" id="streakStat" style="display:none"><span>combo</span><b id="streakVal">0</b></div>
+    <button class="infobtn" id="infoBtn" title="Chế độ nghiên cứu">i</button>
+  </div>
+  <div id="root"></div>
+</div>
+
+<script>
+/* ============================================================
+   THE STANDUP — retrieval-first redesign
+   On error, the rule is HIDDEN. You must diagnose the mistake
+   and say the rule from memory. Only after you produce it does
+   the cue reveal itself — as confirmation, not a script to read.
+   Help (a nudge, then the full rule) appears only when you're
+   stuck: scaffolding is earned by struggle, never handed over.
+   ============================================================ */
+
+// PRACTICE bank — 30 items (3 / grammar point). Disjoint from TEST (shared gp only).
+// Each item: id, gp, tense, ctx, stem (___ = blank), opts, answer, reveal, accept,
+//            nudge, scaffold{point,concept,narrow,full}, apply{pre,blank,post,opts,answer}
+const PRACTICE = [
+  {id:"P01", gp:"present_perfect_since", tense:"Present Perfect — since/for", ctx:"Báo cáo kỹ thuật",
+   stem:"The server ___ several performance issues since the last patch.", opts:["reports","reported","has reported","will report"], answer:2,
+   reveal:["Thấy since → hiện tại hoàn thành"], accept:["present perfect","has reported","since","hiện tại hoàn thành"],
+   nudge:"Khi thấy since thì dùng thì gì?",
+   voiceCue:'Khi thấy "since" thì dùng...',
+   scaffold:{point:"since", concept:"since + mốc quá khứ → việc bắt đầu từ đó còn kéo dài đến giờ → Present Perfect.", narrow:[2,3], full:"since → have/has + V3. Không dùng Simple Past."},
+   apply:{pre:"Our policy", blank:true, post:" unchanged since 2020.", opts:["remains","remained","has remained"], answer:2}},
+
+  {id:"P02", gp:"present_perfect_since", tense:"Present Perfect — since/for", ctx:"Thư xin việc",
+   stem:"I ___ in software development for five years.", opts:["work","worked","have worked","am working"], answer:2,
+   reveal:["for + khoảng thời gian → hiện tại hoàn thành"], accept:["present perfect","have worked","for","hiện tại hoàn thành"],
+   nudge:"Khi thấy for + khoảng thời gian thì dùng thì gì?",
+   voiceCue:'Khi thấy "for" + khoảng thời gian thì dùng...',
+   scaffold:{point:"for", concept:"for + khoảng thời gian liên tục → Present Perfect.", narrow:[2,3], full:"for + khoảng thời gian → have/has + V3."},
+   apply:{pre:"She", blank:true, post:" in this role for six months.", opts:["works","worked","has worked"], answer:2}},
+
+  {id:"P03", gp:"present_perfect_since", tense:"Present Perfect — since/for", ctx:"Cuộc họp",
+   stem:"The committee ___ on this policy since January.", opts:["debates","debated","has debated","is debating"], answer:2,
+   reveal:["since tháng 1 → hiện tại hoàn thành"], accept:["present perfect","since","has debated","hiện tại hoàn thành"],
+   nudge:"Khi thấy since thì dùng thì gì?",
+   voiceCue:'Khi thấy "since" + mốc thời gian thì dùng...',
+   scaffold:{point:"since", concept:"since + mốc thời gian → việc kéo dài đến hiện tại → Present Perfect (have/has + V3).", narrow:[1,2], full:"since → have/has + V3. Không dùng hiện tại đơn hay quá khứ đơn."},
+   apply:{pre:"They", blank:true, post:" the issue since the client raised it.", opts:["discuss","discussed","have been discussing"], answer:2}},
+
+  {id:"P04", gp:"past_perfect_bytime", tense:"Past Perfect — by the time", ctx:"Báo cáo dự án",
+   stem:"By the time the manager called, the staff ___ all the data.", opts:["compile","compiled","has compiled","had compiled"], answer:3,
+   reveal:["By the time + quá khứ đơn → vế kia dùng Past Perfect"], accept:["past perfect","had compiled","by the time","quá khứ hoàn thành"],
+   nudge:"Khi thấy By the time + quá khứ thì vế còn lại dùng thì gì?",
+   voiceCue:'Khi thấy "By the time" + quá khứ đơn thì dùng...',
+   scaffold:{point:"By the time", concept:"By the time + Past Simple → vế kia phải dùng Past Perfect (sự việc xảy ra TRƯỚC).", narrow:[2,3], full:"By the time + V-ed → had + V3 cho vế kia."},
+   apply:{pre:"By the time we arrived, the meeting", blank:true, post:" already begun.", opts:["has","had","was"], answer:1}},
+
+  {id:"P05", gp:"past_perfect_bytime", tense:"Past Perfect — by the time", ctx:"Email thông báo",
+   stem:"By the time the email was sent, the decision ___.", opts:["makes","made","has been made","had been made"], answer:3,
+   reveal:["By the time + quá khứ đơn → had + V3 (passive)"], accept:["past perfect","had been made","by the time","quá khứ hoàn thành"],
+   nudge:"Khi một việc xảy ra trước một mốc quá khứ thì dùng thì gì?",
+   voiceCue:'Khi thấy "By the time" + bị động thì dùng...',
+   scaffold:{point:"By the time", concept:"Quyết định (decision) được đưa ra trước → Past Perfect Passive: had been + V3.", narrow:[2,3], full:"By the time + V-ed → had been + V3 (bị động)."},
+   apply:{pre:"By the time the CEO approved it, the team", blank:true, post:" already left.", opts:["has","had","was"], answer:1}},
+
+  {id:"P06", gp:"past_perfect_bytime", tense:"Past Perfect — by the time", ctx:"Lịch sử công ty",
+   stem:"By the time we launched the product, competitors ___ similar solutions.", opts:["release","released","had released","have released"], answer:2,
+   reveal:["By the time (quá khứ) → đối thủ đã ra mắt TRƯỚC đó → Past Perfect"], accept:["past perfect","had released","by the time","quá khứ hoàn thành"],
+   nudge:"Khi một việc đã xảy ra trước một việc quá khứ khác thì dùng thì gì?",
+   voiceCue:'Khi hai sự việc quá khứ, cái nào trước thì dùng...',
+   scaffold:{point:"By the time", concept:"Hai sự việc quá khứ, cái nào trước dùng Past Perfect.", narrow:[2,3], full:"By the time A happened, B had already V3."},
+   apply:{pre:"By the time she joined, the project", blank:true, post:" already ended.", opts:["has","had","was"], answer:1}},
+
+  {id:"P07", gp:"plural_numberof", tense:"A number of → plural verb", ctx:"Họp ban giám đốc",
+   stem:"A number of board members ___ opposed to the new policy.", opts:["was","is","were","has been"], answer:2,
+   reveal:["A number of + danh từ số nhiều → động từ số nhiều"], accept:["plural","were","a number of","số nhiều"],
+   nudge:"Khi thấy A number of + danh từ số nhiều thì động từ chia thế nào?",
+   voiceCue:'Khi thấy "A number of" + danh từ số nhiều thì dùng...',
+   scaffold:{point:"A number of", concept:"A number of = một số + danh từ số nhiều → động từ số nhiều.", narrow:[0,2], full:"A number of + plural noun → plural verb (were/are/have). Khác: The number of → singular."},
+   apply:{pre:"A number of applications", blank:true, post:" received yesterday.", opts:["was","were","is"], answer:1}},
+
+  {id:"P08", gp:"plural_numberof", tense:"A number of → plural verb", ctx:"Thống kê nhân sự",
+   stem:"A number of employees ___ enrolled in the training program.", opts:["has","was","have","is"], answer:2,
+   reveal:["A number of → have (số nhiều)"], accept:["plural","have","a number of","số nhiều"],
+   nudge:"Khi thấy A number of + danh từ số nhiều thì chọn động từ số ít hay số nhiều?",
+   voiceCue:'Khi thấy "A number of" + danh từ số nhiều thì động từ phải...',
+   scaffold:{point:"A number of", concept:"employees là danh từ số nhiều → động từ đi kèm phải là số nhiều.", narrow:[0,2], full:"A number of + [plural noun] → have/are/were."},
+   apply:{pre:"A number of reports", blank:true, post:" missing from the archive.", opts:["is","was","are"], answer:2}},
+
+  {id:"P09", gp:"plural_numberof", tense:"A number of → plural verb", ctx:"Cuộc khảo sát",
+   stem:"A number of complaints ___ received regarding the new interface.", opts:["was","were","is","has been"], answer:1,
+   reveal:["A number of + complaints (số nhiều) → were"], accept:["plural","were","a number of","số nhiều"],
+   nudge:"Khi danh từ sau A number of là số nhiều thì dùng was hay were?",
+   voiceCue:'Khi thấy "A number of" + danh từ số nhiều (bị động) thì dùng...',
+   scaffold:{point:"A number of", concept:"complaints = danh từ số nhiều → were received (bị động số nhiều).", narrow:[0,1], full:"A number of + plural → were/are/have been + V3."},
+   apply:{pre:"A number of issues", blank:true, post:" flagged by the QA team.", opts:["was","were","is"], answer:1}},
+
+  {id:"P10", gp:"singular_each", tense:"Each/Every → singular verb", ctx:"Quy trình kiểm toán",
+   stem:"Each file ___ to be verified before submission.", opts:["need","needed","needs","have needed"], answer:2,
+   reveal:["Each + danh từ số ít → động từ số ít"], accept:["singular","needs","each","số ít"],
+   nudge:"Khi thấy Each + danh từ số ít thì động từ chia thế nào?",
+   voiceCue:'Khi thấy "Each" + danh từ số ít thì động từ...',
+   scaffold:{point:"Each", concept:"Each = từng cái một → luôn là số ít → động từ số ít.", narrow:[1,2], full:"Each + singular noun → singular verb (needs/is/was/has)."},
+   apply:{pre:"Each report", blank:true, post:" reviewed by two editors.", opts:["are","were","is"], answer:2}},
+
+  {id:"P11", gp:"singular_each", tense:"Each/Every → singular verb", ctx:"Hướng dẫn nhân viên",
+   stem:"Every team member ___ expected to complete the onboarding course.", opts:["are","were","is","have been"], answer:2,
+   reveal:["Every + danh từ → số ít"], accept:["singular","is","every","số ít"],
+   nudge:"Khi thấy Every + danh từ thì động từ chia số ít hay số nhiều?",
+   voiceCue:'Khi thấy "Every" + danh từ thì động từ...',
+   scaffold:{point:"Every", concept:"Every luôn đi với singular noun và singular verb.", narrow:[1,2], full:"Every + singular noun → is/was/has."},
+   apply:{pre:"Every branch office", blank:true, post:" asked to submit the form.", opts:["are","were","is"], answer:2}},
+
+  {id:"P12", gp:"singular_each", tense:"Each/Every → singular verb", ctx:"Chính sách công ty",
+   stem:"Each department head ___ to attend the annual strategy meeting.", opts:["are required","were required","is required","have been required"], answer:2,
+   reveal:["Each department head (số ít) → is required"], accept:["singular","is required","each","số ít"],
+   nudge:"Khi chủ ngữ bắt đầu bằng Each thì động từ chia thế nào?",
+   voiceCue:'Khi chủ ngữ bắt đầu bằng "Each" thì động từ phải...',
+   scaffold:{point:"Each", concept:"Each department head = số ít → is required (bị động số ít).", narrow:[0,2], full:"Each + singular noun → is/was (bị động số ít)."},
+   apply:{pre:"Each branch", blank:true, post:" operated independently.", opts:["are","were","is"], answer:2}},
+
+  {id:"P13", gp:"prep_collocation", tense:"Preposition collocation — responsible for", ctx:"Mô tả công việc",
+   stem:"The logistics coordinator is responsible ___ managing supplier contracts.", opts:["of","about","for","to"], answer:2,
+   reveal:["responsible for = cấu trúc cố định"], accept:["for","responsible for","giới từ"],
+   nudge:"Khi thấy responsible thì đi với giới từ nào?",
+   voiceCue:'Khi thấy "responsible" thì dùng giới từ...',
+   scaffold:{point:"responsible", concept:"responsible for là cụm cố định: chịu trách nhiệm về việc gì.", narrow:[1,2], full:"responsible for + V-ing/noun. KHÔNG dùng responsible of/to."},
+   apply:{pre:"She is responsible", blank:true, post:" training new staff.", opts:["of","for","to"], answer:1}},
+
+  {id:"P14", gp:"prep_collocation", tense:"Preposition collocation — accountable for", ctx:"Đánh giá hiệu suất",
+   stem:"Employees are accountable ___ meeting their quarterly targets.", opts:["of","with","for","to"], answer:2,
+   reveal:["accountable for = cấu trúc cố định"], accept:["for","accountable for","giới từ"],
+   nudge:"Khi thấy accountable thì đi với giới từ nào?",
+   voiceCue:'Khi thấy "accountable" thì dùng giới từ...',
+   scaffold:{point:"accountable", concept:"accountable for = chịu trách nhiệm giải trình về.", narrow:[2,3], full:"accountable for + V-ing/noun."},
+   apply:{pre:"Teams are accountable", blank:true, post:" their deliverables.", opts:["of","for","to"], answer:1}},
+
+  {id:"P15", gp:"prep_collocation", tense:"Preposition collocation — in charge of", ctx:"Phản hồi khách hàng",
+   stem:"The support team is in charge ___ resolving customer complaints.", opts:["of","for","to","with"], answer:0,
+   reveal:["in charge of = cụm cố định"], accept:["of","in charge of","giới từ"],
+   nudge:"Khi thấy in charge thì đi với giới từ nào?",
+   voiceCue:'Khi thấy "in charge" thì dùng giới từ...',
+   scaffold:{point:"in charge", concept:"in charge of = phụ trách, chịu trách nhiệm quản lý.", narrow:[0,1], full:"in charge of + V-ing/noun. KHÔNG dùng in charge for."},
+   apply:{pre:"He is in charge", blank:true, post:" the entire operation.", opts:["of","for","to"], answer:0}},
+
+  {id:"P16", gp:"gerund_after_prep", tense:"Gerund after preposition", ctx:"Email đối ngoại",
+   stem:"The firm is considering ___ its services to new markets.", opts:["to expand","expand","expanding","expanded"], answer:2,
+   reveal:["considering là động từ → theo sau là V-ing"], accept:["gerund","expanding","v-ing","danh động từ"],
+   nudge:"Sau considering thì động từ tiếp theo dùng dạng gì?",
+   voiceCue:'Sau "consider" thì dùng dạng động từ...',
+   scaffold:{point:"considering", concept:"consider + V-ing (không dùng to-V). Đây là động từ theo sau bằng gerund.", narrow:[0,2], full:"consider/suggest/avoid/enjoy/finish + V-ing."},
+   apply:{pre:"The company is considering", blank:true, post:" a new office.", opts:["open","to open","opening"], answer:2}},
+
+  {id:"P17", gp:"gerund_after_prep", tense:"Gerund after preposition", ctx:"Cuộc họp nhóm",
+   stem:"We look forward ___ your presentation at the conference.", opts:["to hear","hear","to hearing","heard"], answer:2,
+   reveal:["look forward to → 'to' là giới từ → V-ing"], accept:["gerund","to hearing","v-ing","danh động từ"],
+   nudge:"Sau look forward to thì dùng V-ing hay to-V?",
+   voiceCue:'Sau "look forward to" thì dùng...',
+   scaffold:{point:"to", concept:"look forward to + V-ing: 'to' là giới từ, KHÔNG phải to-V.", narrow:[0,2], full:"look forward to + V-ing. Đây là lỗi cực phổ biến trong TOEIC."},
+   apply:{pre:"I look forward", blank:true, post:" from you soon.", opts:["to hear","to hearing","hear"], answer:1}},
+
+  {id:"P18", gp:"gerund_after_prep", tense:"Gerund after preposition", ctx:"Hướng dẫn an toàn",
+   stem:"Staff must refrain ___ using personal devices in the lab.", opts:["to use","use","from using","of using"], answer:2,
+   reveal:["refrain from + V-ing = cấu trúc cố định"], accept:["gerund","from using","v-ing","danh động từ"],
+   nudge:"Sau refrain from thì động từ tiếp theo dùng dạng gì?",
+   voiceCue:'Sau "refrain from" thì dùng...',
+   scaffold:{point:"from", concept:"refrain from + V-ing = kiêng/tránh làm gì.", narrow:[2,3], full:"refrain from + V-ing. from là giới từ → bắt buộc V-ing."},
+   apply:{pre:"Employees should refrain", blank:true, post:" personal calls during meetings.", opts:["of making","from making","to make"], answer:1}},
+
+  {id:"P19", gp:"comparative_than", tense:"Comparative — than", ctx:"So sánh sản phẩm",
+   stem:"Our new model is ___ the previous version.", opts:["more efficient as","efficient than","more efficient than","most efficient than"], answer:2,
+   reveal:["so sánh hơn dùng more + adj + than"], accept:["comparative","more efficient than","than","so sánh hơn"],
+   nudge:"Khi so sánh hơn với tính từ dài thì dùng dạng nào?",
+   voiceCue:'Khi so sánh hơn với tính từ dài thì dùng...',
+   scaffold:{point:"than", concept:"Tính từ dài (≥3 âm tiết) → more + adj + than. Không dùng -er.", narrow:[1,2], full:"more + [long adj] + than. Ví dụ: more efficient/expensive/effective than."},
+   apply:{pre:"This route is", blank:true, post:" the old one.", opts:["more shorter than","shorter than","short than"], answer:1}},
+
+  {id:"P20", gp:"comparative_than", tense:"Comparative — than", ctx:"Đánh giá nhà cung cấp",
+   stem:"Vendor A offers ___ Vendor B.", opts:["lower prices than","lowest prices than","more low prices than","low prices than"], answer:0,
+   reveal:["lower (so sánh hơn của low) + than"], accept:["comparative","lower than","than","so sánh hơn"],
+   nudge:"Khi thấy so sánh hơn thì thường đi với từ nào?",
+   voiceCue:'Khi so sánh hơn với tính từ ngắn thì dùng...',
+   scaffold:{point:"than", concept:"short adj + -er + than: low → lower than.", narrow:[0,2], full:"[short adj]-er + than. Không dùng 'as' cho so sánh hơn."},
+   apply:{pre:"The second option is", blank:true, post:" the first one.", opts:["more cheap than","cheaper as","cheaper than"], answer:2}},
+
+  {id:"P21", gp:"comparative_than", tense:"Comparative — than", ctx:"Phân tích tài chính",
+   stem:"This investment strategy yields ___ traditional savings.", opts:["higher returns than","high returns than","more high returns than","higher returns as"], answer:0,
+   reveal:["high → higher + than = so sánh hơn"], accept:["comparative","higher than","than","so sánh hơn"],
+   nudge:"Với tính từ ngắn như high, so sánh hơn dùng dạng nào?",
+   voiceCue:'Khi so sánh hơn với "high" thì dùng...',
+   scaffold:{point:"than", concept:"high là adj ngắn → higher (thêm -er) + than.", narrow:[0,3], full:"high → higher than. Không dùng 'more high' hay 'high … as'."},
+   apply:{pre:"This plan yields", blank:true, post:" profits than the other.", opts:["more higher","higher","high"], answer:1}},
+
+  {id:"P22", gp:"first_conditional", tense:"First Conditional — If + present", ctx:"Kế hoạch kinh doanh",
+   stem:"If sales ___ the target this quarter, we will expand the team.", opts:["will reach","reached","reach","are reaching"], answer:2,
+   reveal:["If + hiện tại đơn → will + V"], accept:["first conditional","reach","present simple","điều kiện loại 1"],
+   nudge:"Trong điều kiện loại 1, sau If dùng thì gì?",
+   voiceCue:'Khi thấy "If" (điều kiện loại 1) thì dùng...',
+   scaffold:{point:"If", concept:"Điều kiện loại 1: If + Present Simple → will + V. Tuyệt đối không dùng will sau If.", narrow:[1,2], full:"If + [present simple], [will + V]. Ví dụ: If it rains, we will cancel."},
+   apply:{pre:"If the supplier confirms,", blank:true, post:" proceed with the order.", opts:["we will","we would","we"], answer:0}},
+
+  {id:"P23", gp:"first_conditional", tense:"First Conditional — If + present", ctx:"Email khách hàng",
+   stem:"If you ___ any questions, please do not hesitate to contact us.", opts:["will have","have","had","would have"], answer:1,
+   reveal:["If + have (hiện tại đơn) = điều kiện loại 1"], accept:["first conditional","have","present simple","điều kiện loại 1"],
+   nudge:"Khi điều kiện có thể xảy ra thật, dùng câu điều kiện loại mấy?",
+   voiceCue:'Khi điều kiện có thể xảy ra thật thì dùng...',
+   scaffold:{point:"If", concept:"Điều kiện thật/hiện tại → loại 1: If + present simple.", narrow:[0,1], full:"If + present simple → imperative hoặc will + V."},
+   apply:{pre:"If the package arrives late,", blank:true, post:" notify the client.", opts:["we will","we would","we"], answer:0}},
+
+  {id:"P24", gp:"first_conditional", tense:"First Conditional — If + present", ctx:"Chính sách hoàn tiền",
+   stem:"If the item ___ damaged, the customer will receive a full refund.", opts:["is","will be","was","were"], answer:0,
+   reveal:["If + is (hiện tại đơn) → will receive"], accept:["first conditional","is","present simple","điều kiện loại 1"],
+   nudge:"Khi nói điều kiện có thể xảy ra trong tương lai, dùng loại mấy?",
+   voiceCue:'Khi điều kiện khả thi trong tương lai thì dùng...',
+   scaffold:{point:"If", concept:"Khả năng có thể xảy ra → loại 1: If + is/are/V.", narrow:[0,2], full:"If + [present simple] (is/are/V), will + V."},
+   apply:{pre:"If demand falls,", blank:true, post:" reduce production.", opts:["we will","we would","we"], answer:0}},
+
+  {id:"P25", gp:"subject_verb_neither", tense:"Neither of → singular verb", ctx:"Họp tuyển dụng",
+   stem:"Neither of the candidates ___ the minimum experience requirement.", opts:["meet","have met","meets","are meeting"], answer:2,
+   reveal:["Neither of + danh từ số nhiều → động từ số ÍT"], accept:["singular","meets","neither of","số ít"],
+   nudge:"Khi thấy Neither of + danh từ số nhiều, động từ chia thế nào trong TOEIC?",
+   voiceCue:'Khi thấy "Neither of" + danh từ số nhiều thì động từ phải...',
+   scaffold:{point:"Neither of", concept:"Neither of + plural noun → singular verb trong formal English (TOEIC luôn dùng formal).", narrow:[0,2], full:"Neither of + [plural noun] → singular verb (meets/is/was/has)."},
+   apply:{pre:"Neither of the reports", blank:true, post:" accurate.", opts:["are","were","is"], answer:2}},
+
+  {id:"P26", gp:"subject_verb_neither", tense:"Neither of → singular verb", ctx:"Đánh giá nhà cung cấp",
+   stem:"Neither of the vendors ___ able to meet the delivery deadline.", opts:["are","were","is","have been"], answer:2,
+   reveal:["Neither of + vendors → is (số ít, formal)"], accept:["singular","is","neither of","số ít"],
+   nudge:"Khi thấy Neither of + danh từ số nhiều, chọn động từ số ít hay số nhiều?",
+   voiceCue:'Khi thấy "Neither of" + danh từ số nhiều (to be) thì dùng...',
+   scaffold:{point:"Neither of", concept:"TOEIC dùng formal English: Neither of → singular (is/was).", narrow:[2,3], full:"Neither of + plural → is (hiện tại) / was (quá khứ)."},
+   apply:{pre:"Neither of the solutions", blank:true, post:" practical.", opts:["are","were","is"], answer:2}},
+
+  {id:"P27", gp:"subject_verb_neither", tense:"Neither of → singular verb", ctx:"Báo cáo kết quả",
+   stem:"Neither of the options ___ clearly superior.", opts:["are","seem","seems","have seemed"], answer:2,
+   reveal:["Neither of + plural noun → seems (số ít)"], accept:["singular","seems","neither of","số ít"],
+   nudge:"Khi chủ ngữ là Neither of thì động từ chia số ít hay số nhiều?",
+   voiceCue:'Khi chủ ngữ là "Neither of" + danh từ số nhiều thì động từ phải...',
+   scaffold:{point:"Neither of", concept:"Neither of the options → singular: seems/is/was.", narrow:[1,2], full:"Neither of + [plural noun] → singular verb."},
+   apply:{pre:"Neither of the candidates", blank:true, post:" selected.", opts:["are","were","was"], answer:2}},
+
+  {id:"P28", gp:"passive_present_perfect", tense:"Passive Present Perfect", ctx:"Cập nhật logistics",
+   stem:"The shipment ___ to the regional warehouse.", opts:["transferred","has transferred","has been transferred","is transferring"], answer:2,
+   reveal:["has been + V3 = Present Perfect Passive (số ít)"], accept:["passive","has been transferred","present perfect passive","bị động hoàn thành"],
+   nudge:"Khi chủ ngữ số ít và câu bị động hoàn thành thì dùng has been hay have been?",
+   voiceCue:'Khi thấy chủ ngữ số ít + bị động hoàn thành thì dùng...',
+   scaffold:{point:"has been", concept:"Subject + has/have + been + V3 = Present Perfect Passive.", narrow:[1,2], full:"Singular subject + has been + V3. Plural → have been + V3."},
+   apply:{pre:"The contract", blank:true, post:" by both parties.", opts:["signed","has signed","has been signed"], answer:2}},
+
+  {id:"P29", gp:"passive_present_perfect", tense:"Passive Present Perfect", ctx:"Thông báo nội bộ",
+   stem:"All safety protocols ___ updated by the compliance team.", opts:["are being","is being","have been","has been"], answer:2,
+   reveal:["All safety protocols (số nhiều) → have been + V3"], accept:["passive","have been","present perfect passive","bị động hoàn thành"],
+   nudge:"Khi chủ ngữ số nhiều và câu bị động hoàn thành thì dùng has been hay have been?",
+   voiceCue:'Khi thấy chủ ngữ số nhiều + bị động hoàn thành thì dùng...',
+   scaffold:{point:"have been", concept:"Plural subject + have been + V3 = Present Perfect Passive số nhiều.", narrow:[2,3], full:"Plural → have been + V3. Singular → has been + V3."},
+   apply:{pre:"The new guidelines", blank:true, post:" distributed to all staff.", opts:["has been","have been","are being"], answer:1}},
+
+  {id:"P30", gp:"passive_present_perfect", tense:"Passive Present Perfect", ctx:"Kiểm tra chất lượng",
+   stem:"The product specifications ___ by the quality assurance team.", opts:["reviewed","have been reviewed","has been reviewed","are reviewing"], answer:1,
+   reveal:["specifications (số nhiều) → have been reviewed"], accept:["passive","have been reviewed","present perfect passive","bị động hoàn thành"],
+   nudge:"Khi chủ ngữ số nhiều thì dùng have been hay has been?",
+   voiceCue:'Khi thấy chủ ngữ số nhiều + bị động hoàn thành thì dùng...',
+   scaffold:{point:"have been", concept:"Specifications là danh từ số nhiều → have been + V3.", narrow:[1,2], full:"Plural noun + have been + V3."},
+   apply:{pre:"The terms", blank:true, post:" finalized by legal.", opts:["has been","have been","are being"], answer:1}},
+];
+
+// TEST bank — 20 items (2 / grammar point). No reveal/explain (test = no feedback).
+// `let` so the delayed flow can load the bank returned by /api/delayed/{pid}.
+let TEST = [
+  {id:"T01", gp:"present_perfect_since", ctx:"Dự án & ngân sách", stem:"The project ___ since the board approved the budget.", opts:["completes","completed","has been completed","will complete"], answer:2},
+  {id:"T02", gp:"present_perfect_since", ctx:"Hồ sơ nhân sự", stem:"She ___ in this department for three years.", opts:["works","worked","has worked","will work"], answer:2},
+  {id:"T03", gp:"past_perfect_bytime", ctx:"Thanh tra", stem:"By the time the inspector arrived, the team ___ the report.", opts:["submits","submitted","has submitted","had submitted"], answer:3},
+  {id:"T04", gp:"past_perfect_bytime", ctx:"Sự kiện", stem:"By the time we reached the venue, the keynote ___.", opts:["starts","started","has started","had started"], answer:3},
+  {id:"T05", gp:"plural_numberof", ctx:"Hội thảo", stem:"A number of employees ___ asked to attend the seminar.", opts:["was","is","were","has been"], answer:2},
+  {id:"T06", gp:"plural_numberof", ctx:"Đề xuất", stem:"A number of proposals ___ reviewed by the committee.", opts:["was","is","were","has been"], answer:2},
+  {id:"T07", gp:"singular_each", ctx:"Báo cáo quý", stem:"Each department ___ required to submit a quarterly report.", opts:["are","were","is","have been"], answer:2},
+  {id:"T08", gp:"singular_each", ctx:"Tuyển dụng", stem:"Every applicant ___ to bring two forms of ID.", opts:["are required","were required","have been required","is required"], answer:3},
+  {id:"T09", gp:"prep_collocation", ctx:"Vai trò quản lý", stem:"The project manager is responsible ___ coordinating all teams.", opts:["of","for","to","with"], answer:1},
+  {id:"T10", gp:"prep_collocation", ctx:"Trách nhiệm dữ liệu", stem:"Staff members are accountable ___ the accuracy of their data.", opts:["of","to","for","with"], answer:2},
+  {id:"T11", gp:"gerund_after_prep", ctx:"Mở rộng thị trường", stem:"We are interested ___ expanding our presence in Southeast Asia.", opts:["to expand","expand","in expanding","for expanding"], answer:2},
+  {id:"T12", gp:"gerund_after_prep", ctx:"Gây quỹ", stem:"The director succeeded ___ securing additional funding.", opts:["to secure","secure","in securing","for securing"], answer:2},
+  {id:"T13", gp:"comparative_than", ctx:"Hệ thống mới", stem:"The new system processes data ___ the previous version.", opts:["more faster than","faster as","faster than","more fast than"], answer:2},
+  {id:"T14", gp:"comparative_than", ctx:"Doanh thu quý", stem:"This quarter's revenue is ___ we had expected.", opts:["higher as","more higher than","higher than","high than"], answer:2},
+  {id:"T15", gp:"first_conditional", ctx:"Kế hoạch mở rộng", stem:"If demand ___ significantly, we will open a second branch.", opts:["will increase","increases","increased","has increased"], answer:1},
+  {id:"T16", gp:"first_conditional", ctx:"Giao hàng", stem:"If the shipment ___ by Friday, we will issue a refund.", opts:["will arrive","arrived","arrives","has arrived"], answer:2},
+  {id:"T17", gp:"subject_verb_neither", ctx:"Tuyển dụng cấp cao", stem:"Neither of the candidates ___ qualified for the senior role.", opts:["are","were","have been","is"], answer:3},
+  {id:"T18", gp:"subject_verb_neither", ctx:"Đề xuất", stem:"Neither of the proposals ___ accepted by the board.", opts:["were","have been","are","was"], answer:3},
+  {id:"T19", gp:"passive_present_perfect", ctx:"Báo cáo kiểm toán", stem:"The annual report ___ by the auditing team.", opts:["reviewed","has reviewed","has been reviewed","is reviewing"], answer:2},
+  {id:"T20", gp:"passive_present_perfect", ctx:"Tài chính", stem:"All invoices ___ processed by the finance department.", opts:["have processed","processed","have been processed","are processing"], answer:2},
+];
+
+const FACES = {
+  neutral:`<svg viewBox='0 0 54 54'><circle cx='20' cy='23' r='2.4' fill='#fff'/><circle cx='34' cy='23' r='2.4' fill='#fff'/><rect x='20' y='33' width='14' height='2.4' rx='1.2' fill='#fff'/></svg>`,
+  happy:`<svg viewBox='0 0 54 54'><circle cx='20' cy='22' r='2.4' fill='#fff'/><circle cx='34' cy='22' r='2.4' fill='#fff'/><path d='M19 31 Q27 39 35 31' stroke='#fff' stroke-width='2.6' fill='none' stroke-linecap='round'/></svg>`,
+  wait:`<svg viewBox='0 0 54 54'><circle cx='20' cy='23' r='2.4' fill='#fff'/><circle cx='34' cy='23' r='2.4' fill='#fff'/><rect x='19' y='33' width='8' height='2.2' rx='1.1' fill='#fff'/></svg>`,
+};
+
+let group="exp", score=0, streak=0;          // `group` is set by the server (/api/assign), never user-chosen
+let participantId=null;                        // assigned by /api/enroll, persisted in localStorage
+let queue=[], preScore=0, postScore=0, paas={germane:null,extraneous:null};
+let demographics={age:null,gender:"",years_english:"",toeic_exp:""};
+// ── attempt log for debrief ──
+let _attempts=[];   // {qIdx, gp, item_id, tense, correct, attempts, wrongWord, voiceText, ms_spent, scaffold_level, whisper_raw}
+let _lastVoice="";  // last STT text from wireMic
+let _whisperRaw=""; // raw whisper transcript before any normalize (for distortion paper)
+let _itemStart=0;   // timestamp when practice item first rendered (for ms_spent)
+let _scaffoldLevel=0; // 0=none, 1=cue card shown, 2=rule revealed
+const root=document.getElementById("root");
+const phaseTag=document.getElementById("phaseTag");
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+const API_BASE = window.location.origin; // same origin → CF tunnel → backend :8090
+
+function setPhase(t){phaseTag.textContent=t;}
+function showStats(on){document.getElementById("scoreStat").style.display=on?"flex":"none";document.getElementById("streakStat").style.display=on?"flex":"none";}
+function refreshStats(){document.getElementById("scoreVal").textContent=score;document.getElementById("streakVal").textContent=streak;}
+function avatar(mood){return `<div class="avatar" id="avatar">${FACES[mood]||FACES.neutral}</div>`;}
+function bossBlock(mood,line,waiting){
+  return `<div class="boss">${avatar(mood)}<div class="bubble">
+    <div class="who">Mentor TOEIC ${waiting?'<span class="waiting"><i></i><i></i><i></i></span>':''}</div>
+    <div class="say" id="bossSay">${line}</div></div></div>`;
+}
+function bossReact(mood,line){
+  const av=document.getElementById("avatar");
+  if(av){av.innerHTML=FACES[mood];av.style.background=mood==="happy"?"var(--go)":mood==="wait"?"var(--cue)":"var(--ink)";}
+  const s=document.getElementById("bossSay");if(s)s.textContent=line;
+}
+function dots(total,idx){let h='<div class="dots">';for(let i=0;i<total;i++)h+=`<div class="dot ${i<idx?'done':i===idx?'now':''}"></div>`;return h+'</div>';}
+// Stem rendering: support BOTH item.stem (single string) AND item.pre+item.post (split).
+// Banks migrated from the older schema still use item.stem; the new spec banks use pre+post.
+function _stemText(item) {
+  if (item.stem != null) {
+    // Split on the FIRST '___' placeholder if present, else inject ? after the verb slot
+    const s = item.stem;
+    const m = s.split('___');
+    return { pre: m[0], post: m.slice(1).join('___') };
+  }
+  return { pre: item.pre || '', post: item.post || '' };
+}
+function stemBlank(item){const t=_stemText(item);return `${t.pre}<span class="blank">?</span>${t.post}`;}
+function stemFilled(item,wrongWord){const t=_stemText(item);return `${t.pre}<span class="filled">${wrongWord}</span>${t.post}`;}
+function transferStemFilled(item,wrongWord){const a=item.apply||{};return `${a.pre||''}<span class="filled">${wrongWord}</span>${a.post||''}`;}
+
+// ---------------- INTRO ----------------
+// Renders the welcome screen with a participant-id input + start button.
+// Validation rules:
+//   - 3-digit P001..P999 → enroll with that id (server checks uniqueness).
+//   - 4-digit P9999 → ADMIN MODE: caller picks exp/ctrl manually for QA.
+//   - Other / empty → button disabled until valid.
+function intro(){
+  setPhase("Bắt đầu");showStats(false);
+  root.innerHTML=`
+   <div class="scene">
+     <div class="eyebrow">TOEIC Campus / Sprint</div>
+     <h1>BẮT ĐẦU</h1>
+     <p class="lede">English Easy Test</p>
+
+     <div class="pidbox">
+       <label for="pidInput" class="tiny" style="display:block;margin-bottom:6px;font-weight:600">
+         Số thí sinh của bạn:</label>
+       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center">
+         <span style="font-family:'IBM Plex Mono';font-size:14px;color:var(--ink-soft)">P</span>
+         <input id="pidInput" maxlength="4" inputmode="numeric" pattern="[0-9]*"
+                autocomplete="off" aria-label="Số thí sinh"
+                style="font-family:'IBM Plex Mono';font-size:18px;padding:10px 14px;border:1.5px solid var(--line);border-radius:10px;width:120px;text-align:center;letter-spacing:.1em;font-weight:600" />
+         <span id="pidHint" class="tiny" style="color:var(--slate);min-height:1em"></span>
+       </div>
+     </div>
+
+     <div class="btnrow" style="margin-top:18px"><button class="btn primary" id="startBtn" disabled>Vào ca luyện →</button></div>
+   </div>`;
+
+  const pidInput = document.getElementById("pidInput");
+  const startBtn = document.getElementById("startBtn");
+  const pidHint = document.getElementById("pidHint");
+
+  // Restore only valid display ids; hide legacy UUID-style ids from old builds.
+  const remembered = (localStorage.getItem("toeic_pid") || "").toUpperCase();
+  if (/^P(\d{3}|9999)$/.test(remembered)) pidInput.value = remembered.replace(/^P/, "");
+
+  function refreshButton() {
+    const raw = (pidInput.value || "").trim();
+    pidHint.textContent = "";
+    pidHint.style.color = "var(--slate)";
+    if (!raw) { startBtn.disabled = true; startBtn.textContent = "Nhập số thí sinh →"; return; }
+    if (!/^[0-9]+$/.test(raw)) {
+      startBtn.disabled = true;
+      pidHint.textContent = "Chỉ chấp nhận chữ số."; pidHint.style.color = "var(--stop)"; return;
+    }
+    if (raw.length === 4) {
+      // Admin path
+      if (raw === "9999") {
+        startBtn.disabled = false;
+        startBtn.textContent = "Admin: chọn nhóm thủ công →";
+        pidHint.textContent = "Admin mode (P9999): bạn sẽ được chọn nhóm thủ công để QA."; return;
+      } else {
+        startBtn.disabled = true;
+        pidHint.textContent = "P9999 là admin; với người tham gia chỉ 3 chữ số."; pidHint.style.color = "var(--stop)"; return;
+      }
+    }
+    if (raw.length !== 3) {
+      startBtn.disabled = true;
+      pidHint.textContent = "Cần đúng 3 chữ số (vd 001) hoặc 4 chữ số 9999 (admin)."; pidHint.style.color = "var(--stop)"; return;
+    }
+    const n = parseInt(raw, 10);
+    if (n < 1 || n > 999) {
+      startBtn.disabled = true;
+      pidHint.textContent = "Số thí sinh phải trong 001–999."; pidHint.style.color = "var(--stop)"; return;
+    }
+    startBtn.disabled = false;
+    startBtn.textContent = "Vào ca luyện →";
+  }
+
+  pidInput.addEventListener("input", refreshButton);
+  refreshButton();
+
+  startBtn.onclick = async () => {
+    const raw = (pidInput.value || "").trim();
+    startBtn.disabled = true;
+    startBtn.textContent = "Đang chuẩn bị…";
+    try {
+      if (raw.length === 4 && raw === "9999") {
+        await enrollAdmin();
+      } else {
+        await ensureEnrolled("P" + raw);
+        showDemographicsSurvey();
+      }
+    } catch (e) {
+      pidHint.textContent = e.message || "Có lỗi — thử lại.";
+      pidHint.style.color = "var(--stop)";
+      refreshButton();
+    }
+  };
+}
+
+// Admin flow: prompt for group, call /api/enroll/admin, persist, then proceed.
+// Kept OUTSIDE assignThenPractice so admin never goes through /api/assign.
+async function enrollAdmin(){
+  const choice = await _adminGroupPrompt();
+  const adminId = "P9999";
+  const res = await fetch(API_BASE + "/api/enroll/admin", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({participant_id: adminId, group: choice}),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "enroll admin failed");
+  participantId = data.participant_id;
+  group = data.group;
+  localStorage.setItem("toeic_pid", participantId);
+  // Admin skips /api/assign — group already set server-side.
+  bossReact("neutral", `Admin mode: nhóm ${group==="exp"?"nói to":"đọc thầm"}.`);
+  _adminLaunchPrompt();
+}
+
+function _adminLaunchPrompt(){
+  root.innerHTML = `
+    <div class="scene" style="max-width:520px;margin:0 auto">
+      <div class="eyebrow" style="color:var(--stop)">Admin mode (P9999)</div>
+      <h1 style="font-size:clamp(22px,4vw,30px)">Chạy kiểm thử</h1>
+      <p class="lede">Nhóm hiện tại: <b>${group==="exp"?"Nói to / mic":"Đọc thầm / control"}</b>. P9999 chỉ dùng QA, không đưa vào phân tích RCT.</p>
+      <div class="btnrow" style="justify-content:center">
+        <button class="btn primary" id="adminPre">Làm pre-test</button>
+        <button class="btn amber" id="adminSkipPre">Skip pre-test → vào luyện tập</button>
+      </div>
+      <p class="tiny center">Skip chỉ hiện với P9999 để test nhanh flow practice/post-test.</p>
+    </div>`;
+  document.getElementById("adminPre").onclick=()=>startTest("pre");
+  document.getElementById("adminSkipPre").onclick=()=>{
+    preScore=0;
+    startPractice();
+  };
+}
+
+function _adminGroupPrompt(){
+  return new Promise((resolve) => {
+    root.innerHTML = `
+      <div class="scene" style="max-width:520px;margin:0 auto">
+        <div class="eyebrow" style="color:var(--stop)">⚠ Admin mode (P9999)</div>
+        <h1 style="font-size:clamp(22px,4vw,30px)">Chọn nhóm thủ công</h1>
+        <p class="lede">Bạn đang vào chế độ kiểm thử. Dữ liệu P9999 sẽ bị <b>loại trừ</b> khỏi phân tích RCT. Hãy chọn nhóm để verify cả hai flow trước khi tuyển người tham gia thật.</p>
+        <div class="gcards" style="display:grid;gap:10px;grid-template-columns:1fr 1fr;margin:18px 0">
+          <button class="gcard" data-g="exp">
+            <div class="gt">Nhóm nói to <span class="pill">voice</span></div>
+            <div class="gd">Scaffold → bấm mic → Whisper xác minh quy tắc.</div>
+          </button>
+          <button class="gcard" data-g="ctrl">
+            <div class="gt">Nhóm đọc thầm <span class="pill">silent</span></div>
+            <div class="gd">Cùng scaffold → nút "Tôi đã đọc xong" sau delay.</div>
+          </button>
+        </div>
+        <p class="tiny">Tip: chạy mỗi nhóm 1–2 lần để xác nhận UI + micro interaction + minDelay timer hoạt động khớp nhau.</p>
+      </div>`;
+    root.querySelectorAll(".gcard").forEach(c => c.onclick = () => resolve(c.dataset.g));
+  });
+}
+
+// Enroll helper. `requestedId` (optional) is what the user typed on the intro
+// screen (e.g. "P042"). When provided, the server checks uniqueness and rejects
+// duplicates (HTTP 409). When omitted (e.g. recovering from a stale session),
+// server auto-generates a uuid8 id (legacy fallback).
+async function ensureEnrolled(requestedId){
+  const cached = localStorage.getItem("toeic_pid");
+  if (cached && (!requestedId || cached.toUpperCase() === requestedId.toUpperCase())) {
+    participantId = cached;
+    return participantId;
+  }
+  try{
+    const res = await fetch(API_BASE + "/api/enroll", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(requestedId ? {participant_id: requestedId} : {}),
+    });
+    const data = await res.json();
+    if (data && data.participant_id){
+      participantId = data.participant_id;
+      localStorage.setItem("toeic_pid", participantId);
+      return participantId;
+    }
+    if (!res.ok) throw new Error(data.error || `enroll failed (${res.status})`);
+  }catch(e){ throw e; }
+  return participantId;
+}
+
+function optionButtons(name, values){
+  return `<div class="chips" data-demo="${name}">${values.map(v=>`<button type="button" class="chip demo-opt" data-v="${v}">${v}</button>`).join("")}</div>`;
+}
+
+function showDemographicsSurvey(){
+  setPhase("Thông tin nền");showStats(false);
+  demographics={age:null,gender:"",years_english:"",toeic_exp:""};
+  root.innerHTML=`
+   <div class="scene">
+    <div class="eyebrow">Survey 1 / Thông tin nền</div>
+    <h1 style="font-size:clamp(28px,6vw,44px);margin-bottom:10px">Thông tin nền</h1>
+    <p class="lede" style="font-size:15px;margin-bottom:18px">Trả lời 4 câu ngắn trước khi vào pre-test. Dữ liệu chỉ dùng để mô tả mẫu.</p>
+    <div class="qcard demo">
+      <div class="demo-row">
+        <div class="demo-q">D1. Bạn bao nhiêu tuổi?</div>
+        <input id="demoAge" type="number" min="10" max="80" inputmode="numeric" placeholder="—"
+          class="demo-age" />
+      </div>
+      <div class="demo-row">
+        <div class="demo-q">D2. Giới tính</div>
+        ${optionButtons("gender",["Nam","Nữ","Khác"])}
+      </div>
+      <div class="demo-row">
+        <div class="demo-q">D3. Bạn đã học tiếng Anh bao nhiêu năm?</div>
+        ${optionButtons("years_english",["<5","5–8","9–12",">12"])}
+      </div>
+      <div class="demo-row">
+        <div class="demo-q">D4. Bạn đã từng thi TOEIC chưa?</div>
+        ${optionButtons("toeic_exp",["Chưa","Có, dưới 500","Có, 500–700","Có, trên 700"])}
+      </div>
+      <p id="demoWarn" class="demo-warn">Vui lòng trả lời đủ 4 câu.</p>
+      <div class="btnrow" style="margin-top:14px"><button class="btn primary demo-go" id="demoGo">Tiếp tục →</button></div>
+    </div>
+   </div>`;
+
+  root.querySelectorAll(".chips[data-demo]").forEach(groupEl=>{
+    groupEl.querySelectorAll(".demo-opt").forEach(btn=>btn.onclick=()=>{
+      groupEl.querySelectorAll(".demo-opt").forEach(x=>x.classList.remove("sel"));
+      btn.classList.add("sel");
+      demographics[groupEl.dataset.demo]=btn.dataset.v;
+      document.getElementById("demoWarn").style.display="none";
+    });
+  });
+
+  document.getElementById("demoGo").onclick=async()=>{
+    const warn=document.getElementById("demoWarn");
+    const age=Number(document.getElementById("demoAge").value);
+    if(!Number.isInteger(age)||age<10||age>80||!demographics.gender||!demographics.years_english||!demographics.toeic_exp){
+      warn.textContent="Vui lòng trả lời đủ 4 câu trước khi tiếp tục.";
+      warn.style.display="block";
+      return;
+    }
+    demographics.age=age;
+    const btn=document.getElementById("demoGo");
+    btn.disabled=true;btn.textContent="Đang lưu…";
+    try{
+      const res=await fetch(API_BASE+"/api/participants/demographics",{
+        method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({participant_id:participantId,...demographics}),
+      });
+      if(!res.ok){const data=await res.json().catch(()=>({}));throw new Error(data.error||"save demographics failed");}
+      localStorage.setItem(`toeic_demo_done_${participantId}`,"1");
+      startTest("pre");
+    }catch(e){
+      btn.disabled=false;btn.textContent="Tiếp tục →";
+      warn.textContent="Không lưu được — kiểm tra kết nối rồi thử lại.";
+      warn.style.display="block";
+    }
+  };
+}
+
+async function startDelayed(pid){
+  setPhase("Sau 2 tuần");showStats(false);
+  root.innerHTML=`<div class="scene center" style="padding-top:40px">
+    <div class="debrief-loading"><span class="waiting"><i></i><i></i><i></i></span> Đang mở bài kiểm tra sau 2 tuần…</div></div>`;
+  try{
+    const res=await fetch(API_BASE+"/api/delayed/"+encodeURIComponent(pid));
+    if(!res.ok){
+      root.innerHTML=`<div class="scene center" style="padding-top:40px"><p class="lede">Link không hợp lệ hoặc bạn chưa hoàn tất buổi luyện đầu. Hãy dùng đúng link đã nhận.</p></div>`;
+      return;
+    }
+    const data=await res.json();
+    participantId=pid; group=data.group;
+    localStorage.setItem("toeic_pid", participantId);
+    startTest("delayed");
+  }catch(e){
+    root.innerHTML=`<div class="scene center" style="padding-top:40px"><p class="lede">Không kết nối được máy chủ. Thử lại sau.</p></div>`;
+  }
+}
+
+// ---------------- TEST (pre/post/delayed) ----------------
+let testIdx=0,testRight=0,testKind="pre";
+function startTest(kind){testKind=kind;testIdx=0;testRight=0;renderTestItem();}
+function renderTestItem(){
+  const isDelayed=testKind==="delayed";
+  setPhase(testKind==="pre"?"Đầu vào":isDelayed?"Sau 2 tuần":"Kiểm tra cuối");showStats(false);
+  const item=TEST[testIdx];
+  const testLabel=testKind==="pre"?"Kiểm tra trước khi luyện":isDelayed?"Kiểm tra sau 2 tuần":"Kiểm tra sau khi luyện";
+  root.innerHTML=`
+   <div class="scene">${dots(TEST.length,testIdx)}
+     <div class="eyebrow">${testLabel} · ${testIdx+1}/${TEST.length}</div>
+     <div class="qcard"><div class="qctx">${item.ctx}</div><div class="stem">${stemBlank(item)}</div>
+       <div class="opts">${item.opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="key">${"ABCD"[i]}</span>${o}</button>`).join("")}</div></div>
+     </div>`;
+  root.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    if(+b.dataset.i===item.answer)testRight++;
+    root.querySelectorAll(".opt").forEach(x=>x.disabled=true);b.style.borderColor="var(--ink)";
+    setTimeout(()=>{testIdx++;
+      if(testIdx<TEST.length)renderTestItem();
+      else if(testKind==="pre"){preScore=testRight;assignThenPractice();}
+      else if(testKind==="delayed"){showDelayedResults(testRight);}
+      else{postScore=testRight;results();}},240);
+  });
+}
+
+// After the pre-test the SERVER decides the group (stratified by pre_total).
+async function assignThenPractice(){
+  setPhase("Phân nhóm");
+  root.innerHTML=`<div class="scene center" style="padding-top:40px">
+    <div class="debrief-loading"><span class="waiting"><i></i><i></i><i></i></span> Đang phân ngẫu nhiên cách luyện cho bạn…</div></div>`;
+  try{
+    if(!participantId) await ensureEnrolled();
+    const res=await fetch(API_BASE+"/api/assign",{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({participant_id:participantId,pre_total:testRight}),
+    });
+    const data=await res.json();
+    if(data&&(data.group==="exp"||data.group==="ctrl")) group=data.group;
+  }catch(e){ /* offline: fall back to current `group` default so the session can continue */ }
+  startPractice();
+}
+
+// ---------------- PRACTICE ----------------
+function startPractice(){queue=PRACTICE.map((_,i)=>i);score=0;streak=0;_attempts=[];showStats(true);refreshStats();nextPractice();}
+function nextPractice(){
+  if(queue.length===0){startTest("post");return;}
+  renderFresh(queue[0]);
+}
+
+function renderFresh(idx){
+  const item=PRACTICE[idx];const total=PRACTICE.length;
+  const done=total-queue.length;
+  _itemStart=Date.now(); _scaffoldLevel=0;
+  setPhase("Luyện tập");
+  root.innerHTML=`
+   <div class="scene">${dots(total,Math.min(done,total-1))}
+     ${bossBlock("neutral","Bắt đầu nhé. Chọn đáp án đúng cho câu này.",false)}
+     <div class="qcard"><div class="qctx">${item.ctx}</div><div class="stem">${stemBlank(item)}</div>
+       <div class="opts">${item.opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="key">${"ABCD"[i]}</span>${o}</button>`).join("")}</div></div>
+     <div id="gateMount"></div></div>`;
+  root.querySelectorAll(".opt").forEach(b=>b.onclick=()=>answerFresh(idx,+b.dataset.i,b));
+}
+function answerFresh(idx,choice,btn){
+  const item=PRACTICE[idx];
+  root.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+  if(choice===item.answer){
+    btn.classList.add("correct");score+=10;streak++;refreshStats();
+    _attempts.push({qIdx:idx,gp:item.gp,item_id:item.id,phase:"fresh",tense:item.tense,correct:true,attempts:1,ms_spent:_itemStart?Date.now()-_itemStart:0,scaffold_level:_scaffoldLevel});
+    bossReact("happy",praise());queue.shift();setTimeout(nextPractice,950);
+  }else{
+    btn.classList.add("wrong","shake");streak=0;refreshStats();
+    _attempts.push({qIdx:idx,gp:item.gp,item_id:item.id,phase:"fresh",tense:item.tense,correct:false,attempts:1,wrongWord:item.opts[choice],ms_spent:_itemStart?Date.now()-_itemStart:0,scaffold_level:_scaffoldLevel});
+    diagnoseGate(idx,item.opts[choice],"fresh");
+  }
+}
+
+function gateComplete(idx,kind){
+  if(_gateStart && _attempts.length){
+    _attempts[_attempts.length-1].gateMs = Date.now()-_gateStart;   // thời gian đọc quy tắc
+    _attempts[_attempts.length-1].scaffold_level = _scaffoldLevel;  // 0=none, 1=cue, 2=rule
+    _gateStart=0;
+  }
+  if(kind==="fresh") renderTransfer(idx);
+  else { queue.shift(); setTimeout(nextPractice,250); }
+}
+
+// transfer: same rule, new sentence, exactly once after a fresh error
+function renderTransfer(idx){
+  const item=PRACTICE[idx];const a=item.apply;const total=PRACTICE.length;
+  const done=total-queue.length;
+  _itemStart=Date.now(); _scaffoldLevel=0;
+  setPhase("Luyện tập");
+  root.innerHTML=`
+   <div class="scene">${dots(total,Math.min(done,total-1))}
+     ${bossBlock("neutral","Cùng một luật — câu mới. Thử chuyển hóa xem.",false)}
+     <div class="qcard"><div class="qctx">Câu chuyển hóa · luật này bạn vừa gặp</div>
+       <div class="stem">${a.pre}<span class="blank">?</span>${a.post}</div>
+       <div class="opts">${a.opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="key">${"ABC"[i]}</span>${o}</button>`).join("")}</div></div>
+     <div id="gateMount"></div></div>`;
+  root.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    root.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+    if(+b.dataset.i===a.answer){
+      b.classList.add("correct");score+=14;streak++;refreshStats();
+      _attempts.push({qIdx:idx,gp:item.gp,item_id:item.id,phase:"transfer",tense:item.tense,correct:true,attempts:1,ms_spent:_itemStart?Date.now()-_itemStart:0,scaffold_level:_scaffoldLevel});
+      bossReact("happy","Đã chuyển hóa được. Tốt.");queue.shift();setTimeout(nextPractice,950);
+    }else{
+      b.classList.add("wrong","shake");
+      root.querySelector(`.opt[data-i="${a.answer}"]`).classList.add("correct");
+      streak=0;refreshStats();
+      _attempts.push({qIdx:idx,gp:item.gp,item_id:item.id,phase:"transfer",tense:item.tense,correct:false,attempts:1,wrongWord:a.opts[+b.dataset.i],ms_spent:_itemStart?Date.now()-_itemStart:0,scaffold_level:_scaffoldLevel});
+      diagnoseGate(idx,a.opts[+b.dataset.i],"transfer");
+    }
+  });
+}
+function praise(){const p=["Gọn. Câu tiếp.","Chuẩn rồi.","Đúng đáp án.","Tốt — giữ nhịp.","Nhanh đấy."];return p[Math.floor(Math.random()*p.length)];}
+
+function ruleTextVI(item){
+  if(item.scaffold?.full) return item.scaffold.full;
+  const t=(item.tense||'').toLowerCase();
+  const ctx=(item.ctx||'').toLowerCase();
+  if(t.includes('present perfect')) return 'Thấy since hoặc for + mốc/khoảng thời gian → chọn ngay Hiện tại hoàn thành: have/has + V3/ed.';
+  if(t.includes('past perfect')) return 'Thấy By the time + mệnh đề Quá khứ đơn → vế còn lại chọn Quá khứ hoàn thành: had + V3/ed.';
+  if(t.includes('plural')) return 'Thấy A number of + danh từ số nhiều → chọn động từ số nhiều: are/were/have/do. Khác với The number of → số ít.';
+  if(t.includes('singular')) return 'Thấy chủ ngữ bắt đầu bằng Each hoặc Every → chọn ngay động từ số ít: is/was/has/does.';
+  if(t.includes('preposition')) return item.scaffold?.full || (item.reveal||[]).join(' ');
+  if(t.includes('gerund')) return item.scaffold?.full || (item.reveal||[]).join(' ');
+  if(t.includes('comparative')) return 'Thấy than → chọn ngay dạng so sánh hơn: tính từ ngắn thêm -er, tính từ dài dùng more + adjective.';
+  if(t.includes('conditional')) return 'Thấy If và vế chính có will → câu điều kiện loại 1. Vế If chia hiện tại đơn, tuyệt đối không dùng will sau If.';
+  if(ctx.includes('logistics')) return 'Có already và been dispatched → chắc chắn là thì hoàn thành/bị động. Chủ ngữ The shipment số ít → chọn has.';
+  if(ctx.includes('tuyển dụng')) return 'Thấy Neither of + danh từ số nhiều → trong TOEIC/formal English, động từ chia số ít → chọn is.';
+  if(ctx.includes('kết email')) return 'Cụm look forward to là cấu trúc cố định: to là giới từ, không phải to-V → sau to dùng V-ing hoặc noun.';
+  return (item.reveal||[]).join(' ');
+}
+
+// ---------------- THE DIAGNOSE GATE (symmetric: both groups see identical scaffold) ----------------
+// minDelay = thời gian (ms) nhóm ctrl phải đọc thầm trước khi mở khóa Continue.
+// Đây là biến cân chỉnh để ≈ thời gian trung bình nhóm exp dành cho bước nói.
+let minDelay=15000;
+let _gateStart=0;   // timestamp mở gate đọc-to/đọc-thầm (đo time-on-task để cân 2 nhóm)
+
+// Both groups go through the SAME scaffold, then diverge ONLY at the
+// "phát biểu quy tắc" step: exp speaks (mic→Whisper→check), ctrl reads
+// silently then confirms after `minDelay`. No information asymmetry.
+function diagnoseGate(idx,wrongWord,kind="fresh"){
+  const item=PRACTICE[idx];
+  const mount=document.getElementById("gateMount");
+  const badSentence = kind==="transfer" ? transferStemFilled(item,wrongWord) : stemFilled(item,wrongWord);
+  _gateStart=Date.now();   // mốc mở gate — để đo time-on-task, cân thời gian giữa 2 nhóm
+  _scaffoldLevel=0;        // reset scaffold tracker cho câu này
+  // R2-C: recall-first. exp nói ra qua mic; ctrl nhớ lại trong đầu rồi đọc thầm.
+  // Sau bước recall → hiện cue card + rule để đọc thầm, cùng lượng thông tin.
+  bossReact("wait","Sai rồi. Hãy nhớ lại quy tắc trước — đừng nhìn đáp án.");
+  mount.innerHTML=`
+    <div class="gate">
+      <h3><span class="lock-tag">Thử thách ngữ pháp</span></h3>
+      <p class="prompt">${group==="exp"?"Hãy nói ra ngữ pháp đúng của câu, nói theo dạng \"Khi thấy ... thì dùng ...\"":"Hãy suy luận ngữ pháp đúng và hệ thống quy tắc đó theo dạng: \"Khi thấy ... thì dùng ...\""}</p>
+      <div class="badsent">${badSentence}</div>
+      <p class="prompt">${group==="exp"?"Bấm mic và bắt đầu nói, take it easy.":""}</p>
+      <div id="speakMount"></div>
+    </div>`;
+  renderSpeakStep(idx,kind);
+}
+
+// Shared scaffold shown identically to BOTH groups.
+// (P0: a think-first prompt → single rule reveal. P1-G upgrades this to
+//  the 4-tier progressive scaffold from §2.3 — still shared by both groups.)
+// The speak/read-silent step (renderSpeakStep) is ALWAYS rendered together with
+// the scaffold — both groups must verbalize the rule internally. The DIFFERENCE
+// is only HOW: exp speaks aloud (mic → Whisper → check-rule); ctrl reads silently
+// with a minDelay unlock. This is the single between-group variable.
+function renderScaffold(idx){
+  const item=PRACTICE[idx];
+  const mount=document.getElementById("scaffoldMount");
+  let tier=1;
+  const point=item.scaffold?.point || "tín hiệu";
+  const concept=item.scaffold?.concept || item.nudge || "Nhìn tín hiệu trong câu và gọi tên quy tắc.";
+  const narrow=(item.scaffold?.narrow||[]).map(i=>item.opts?.[i]).filter(Boolean);
+  function render(){
+    let body=`<div class="nudge" id="thinkPrompt"><b>Gợi ý ${tier}/3:</b> `;
+    if(tier===1){
+      body+=`Chú ý từ <span class="hl">${point}</span> trong câu — nó gợi quy tắc gì?`;
+    }else if(tier===2){
+      body+=concept;
+    }else{
+      const pair=narrow.length?narrow.join("</b> / <b>"):"hai lựa chọn gần nhất";
+      body+=`Thu hẹp lại — đáp án đúng nằm giữa: <b>${pair}</b>. Quy tắc nào quyết định?`;
+    }
+    body+=`</div>`;
+    const moreBtn=tier<3
+      ? `<div class="btnrow" style="justify-content:center"><button class="btn ghost" id="showHint">Vẫn chưa rõ →</button></div>`
+      : `<p class="tiny center">Hết gợi ý. Hãy tự nói/đọc lại quy tắc bên dưới — quy tắc đầy đủ mở sau bước đó.</p>`;
+    mount.innerHTML=body+moreBtn;
+    const b=document.getElementById("showHint");
+    if(b) b.onclick=()=>{tier++;render();};
+  }
+  render();
+}
+
+// The ONLY between-group difference: speak aloud (exp) vs read silently (ctrl).
+function renderSpeakStep(idx,kind="fresh"){
+  const item=PRACTICE[idx];
+  const mount=document.getElementById("speakMount");
+  if(group==="exp"){
+    mount.innerHTML=`
+      <div class="micwrap">
+        <button class="orb" id="orb">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4"/></svg>
+        </button>
+        <div class="miclabel" id="micLabel"></div>
+        <div class="transcript empty" id="trans">— lời bạn nói sẽ hiện ở đây —</div>
+        <div class="verdict" id="verdict"></div>
+      </div>
+      <div id="cueMount"></div>
+      <div id="aidMount"></div>
+      <div class="btnrow" id="gateBtns" style="justify-content:center"></div>
+      <div id="revMount"></div>`;
+    wireMic(idx,kind);
+  }else{
+    // ctrl: recall silently for minDelay, then read the same cue + rule silently.
+    mount.innerHTML=`
+      <div class="nudge" id="ctrlDwell">Gợi ý sẽ xuất hiện sau <b id="ctrlCountdown">${Math.ceil(minDelay/1000)}</b> giây…</div>
+      <div id="cueMount"></div>
+      <div id="ctrlAfter"></div>`;
+    const cd=document.getElementById("ctrlCountdown");
+    let left=Math.ceil(minDelay/1000);
+    const tick=setInterval(()=>{left--; if(cd) cd.textContent=Math.max(left,0);},1000);
+    setTimeout(()=>{
+      clearInterval(tick);
+      _scaffoldLevel=2;  // ctrl sees cue + full rule after silent-recall dwell
+      const cueMount=document.getElementById("cueMount");
+      const after=document.getElementById("ctrlAfter");
+      const dwell=document.getElementById("ctrlDwell");
+      if(dwell) dwell.innerHTML="Đã hết thời gian. Hãy xem gợi ý và quy tắc đầy đủ dưới đây.";
+      cueMount.innerHTML=cueHintHTML(item);
+      after.innerHTML=revealHTML(item);
+      after.insertAdjacentHTML("beforeend", `<div class="btnrow" style="justify-content:center"><button class="btn primary" id="ctrlGo">Tôi đã đọc xong →</button></div>`);
+      document.getElementById("ctrlGo").onclick=()=>gateComplete(idx,kind);
+    },minDelay);
+  }
+}
+
+// R2-B: cue card sau recall fail.
+// exp: cue + tiếp tục nói qua mic (Whisper verify cue match trong item.accept)
+// ctrl: cue + bấm "Tôi đã đọc cue" → reveal rule
+function showCueCard(item, idx, kind, recalled){
+  _scaffoldLevel=1;  // cue card = scaffold level 1
+  const cueMount = document.getElementById("cueMount");
+  const after    = document.getElementById("ctrlAfter") || document.getElementById("revMount");
+  if(group==="exp"){
+    // Exp group must actively recall again after the cue; no continue/reveal button
+    // until the mic check passes or the learner reaches attempt > 2.
+    cueMount.innerHTML = cueHintHTML(item);
+    return;
+  }
+  cueMount.innerHTML = cueHintHTML(item) + `
+    <div class="btnrow" style="justify-content:center">
+      <button class="btn primary" id="cueOk">Tôi đã đọc cue → mở quy tắc</button>
+    </div>`;
+  document.getElementById("cueOk").onclick=()=>{
+    _scaffoldLevel=2;  // rule revealed = scaffold level 2
+    after.innerHTML = revealHTML(item);
+    after.insertAdjacentHTML("beforeend", `<div class="btnrow" style="justify-content:center"><button class="btn primary" id="finalGo">Tiếp tục →</button></div>`);
+    document.getElementById("finalGo").onclick=()=>gateComplete(idx,kind);
+    cueMount.innerHTML="";
+  };
+}
+
+function revealHTML(item){
+  const ruleHTML = ruleTextVI(item)
+    .replace(/(since|for|have\/has \+ V3|had \+ V3|A number of|Each|every|responsible for|V-ing|than|If \+ hiện tại đơn|will \+ V)/gi,
+      '<span class="hl">$1</span>');
+  return `<div class="reveal"><div class="lab">✓ đây là quy tắc đúng</div><p class="rule">${ruleHTML}</p></div>`;
+}
+
+// R2-B cue card: hiện ngay sau khi recall fail lần 1.
+// Pattern "Khi thấy X thì dùng Y" giúp học sinh học metacognitive strategy.
+function cueHintHTML(item){
+  const cue = item.voiceCue || `Khi thấy "${item.scaffold?.point||'tín hiệu'}" thì dùng...`;
+  return `<div class="cue-card"><div class="cue-kicker">💡 Gợi ý phương hướng</div><p class="cue-text">${cue}</p></div>`;
+}
+
+function wireMic(idx,kind="fresh"){
+  const item=PRACTICE[idx];
+  const orb=document.getElementById("orb"),label=document.getElementById("micLabel"),
+        trans=document.getElementById("trans"),verdict=document.getElementById("verdict"),
+        btns=document.getElementById("gateBtns"),aid=document.getElementById("aidMount"),rev=document.getElementById("revMount");
+  let attempts=0;
+
+  function solve(){
+    orb.classList.remove("live","processing");orb.classList.add("ok");
+    orb.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>`;
+    verdict.className="verdict good";verdict.textContent="✓ Tốt — bạn đã đọc to quy tắc.";
+    label.textContent="Bạn vừa đọc to quy tắc. Đọc to giúp nhớ lâu hơn đọc thầm.";
+    document.querySelector(".gate").classList.add("solved");
+    document.querySelector(".lock-tag").classList.add("go");
+    document.querySelector(".lock-tag").textContent="đã nhớ";
+    score+=8;refreshStats();bossReact("happy","Đúng hướng rồi. Đi tiếp.");
+    // tag the last attempt with the voice text they used to solve it
+    if(_attempts.length && _lastVoice){
+      _attempts[_attempts.length-1].voiceText = _lastVoice;
+      _attempts[_attempts.length-1].whisper_raw = _whisperRaw;
+    }
+    aid.innerHTML="";
+    btns.innerHTML=`<button class="btn primary" id="go">Tiếp tục →</button>`;
+    document.getElementById("go").onclick=()=>gateComplete(idx,kind);
+  }
+  function showNudge(){ aid.innerHTML=""; showCueCard(item, idx, kind, /*recalled=*/false); }
+  function offerRule(){
+    _scaffoldLevel=2;  // full rule revealed = scaffold level 2
+    const cueMount=document.getElementById("cueMount");
+    if(cueMount) cueMount.innerHTML="";
+    if(rev) rev.innerHTML = revealHTML(item);
+    label.textContent="Đọc to quy tắc ở trên một lần nữa rồi tiếp tục.";
+    // Keep only one continue path after reveal to avoid duplicate CTA buttons.
+    btns.innerHTML=`<button class="btn ghost" id="retry">Đọc lại</button>
+                    <button class="btn amber" id="ovr">Tôi đã đọc to →</button>`;
+    document.getElementById("retry").onclick=()=>{verdict.textContent="";trans.textContent="— lời bạn đọc sẽ hiện ở đây —";trans.className="transcript empty";};
+    document.getElementById("ovr").onclick=solve;
+  }
+
+  // ── Groq-powered check: STT transcript → /api/check-rule ──────────
+  async function checkWithGroq(text){
+    _lastVoice = text;  // capture for debrief
+    _whisperRaw = text; // raw whisper transcript (for distortion analysis)
+    trans.textContent=text||"(không nghe thấy gì)";trans.className="transcript";
+    const onlyLetter=/^\s*(answer\s*)?[a-d]\.?\s*$/i.test(text)||/option [a-d]/i.test(text.toLowerCase());
+    // R2-B: After cue, exp must pass via mic; only attempt > 2 can reveal rule.
+    if(onlyLetter){
+      attempts++;verdict.className="verdict bad";
+      verdict.textContent="Nói quy tắc, không chỉ nói chữ đáp án.";
+      label.textContent="Bấm mic và thử lại một lần nữa.";orb.classList.remove("live","processing");
+      if(attempts>2)offerRule(); else showNudge();
+      return;
+    }
+    // Call /api/check-rule
+    orb.classList.add("processing");label.textContent="Mentor đang kiểm tra phần bạn đọc…";verdict.textContent="";
+    try{
+      const fd=new FormData();
+      fd.append("text",text);
+      fd.append("tense",item.tense||"");
+      fd.append("accept",JSON.stringify(item.accept||[]));
+      fd.append("lang","vi");
+      if(item.id) fd.append("item_id", item.id);
+      if(item.gp) fd.append("gp", item.gp);
+      const res=await fetch(API_BASE+"/api/check-rule",{method:"POST",body:fd});
+      const data=await res.json();
+      orb.classList.remove("processing");
+      if(data.passed){solve();}
+      else{
+        attempts++;
+        verdict.className="verdict bad";
+        verdict.textContent=data.feedback||"Chưa đủ — hãy nói rõ quy tắc ngữ pháp.";
+        label.textContent="Bấm mic và thử lại một lần nữa.";orb.classList.remove("live");
+        if(attempts>2) offerRule();
+        else showNudge();
+      }
+    }catch(e){
+      // Network error — treat as "could not verify". Do NOT fallback to local
+      // accept-list matching here; doing so can pass on cached / hallucinated
+      // transcripts and break RCT validity. Surface a neutral fail instead.
+      orb.classList.remove("processing");
+      attempts++;
+      verdict.className="verdict bad";
+      verdict.textContent="Chưa đủ — hãy nói rõ quy tắc ngữ pháp.";
+      label.textContent="Bấm mic và thử lại một lần nữa.";orb.classList.remove("live");
+      if(attempts>2) offerRule();
+      else showNudge();
+    }
+  }
+
+  // ── Groq Whisper recorder ─────────────────────────────────────────
+  async function recordAndTranscribe(){
+    if(!navigator.mediaDevices){
+      label.textContent="Không dùng được mic — hãy gõ bên dưới.";
+      showTypeFallback();return;
+    }
+    let stream;
+    try{ stream=await navigator.mediaDevices.getUserMedia({audio:true}); }
+    catch(e){ label.textContent="Bạn chưa cấp quyền mic — hãy gõ bên dưới.";showTypeFallback();return; }
+
+    const mr=new MediaRecorder(stream,{mimeType:MediaRecorder.isTypeSupported("audio/webm")?"audio/webm":"audio/mp4"});
+    const chunks=[];
+    mr.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
+
+    // RMS amplitude sampling to detect silent / near-silent recordings and
+    // prevent Whisper hallucination from being accepted by check-rule.
+    let audioCtx=null, analyser=null, sampleBuf=null, sampleTimer=null, maxRms=0;
+    try{
+      audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+      const source = audioCtx.createMediaStreamSource(stream);
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 1024;
+      source.connect(analyser);
+      sampleBuf = new Uint8Array(analyser.frequencyBinCount);
+      const tick = ()=>{
+        if(!analyser) return;
+        analyser.getByteTimeDomainData(sampleBuf);
+        let sum=0;
+        for(let i=0;i<sampleBuf.length;i++){
+          const v = (sampleBuf[i]-128)/128;
+          sum += v*v;
+        }
+        const r = Math.sqrt(sum/sampleBuf.length);
+        if (r > maxRms) maxRms = r;
+      };
+      sampleTimer = setInterval(tick, 80);
+    }catch(e){
+      // AudioContext unavailable on this device — fall back to size guard only.
+      audioCtx=null;
+    }
+
+    const startTime = Date.now();
+    mr.start();
+    orb.classList.add("live");label.textContent="Đang ghi âm… bấm lần nữa để dừng";verdict.textContent="";
+    orb._stop=()=>{
+      mr.stop();stream.getTracks().forEach(t=>t.stop());
+      orb._stop=null;
+    };
+    mr.onstop=async()=>{
+      if (sampleTimer) {clearInterval(sampleTimer); sampleTimer=null;}
+      if (audioCtx) {try{audioCtx.close();}catch(e){} audioCtx=null;}
+      analyser=null;
+      orb.classList.remove("live");orb.classList.add("processing");
+      label.textContent="Groq Whisper đang nghe lại…";
+      const dur = Date.now() - startTime;
+      const blob=new Blob(chunks,{type:mr.mimeType});
+      if(blob.size<500){
+        orb.classList.remove("processing");
+        label.textContent="Quá ngắn — hãy nói ít nhất 1 giây.";return;
+      }
+      if(dur<700){
+        orb.classList.remove("processing");
+        label.textContent="Quá ngắn — hãy giữ mic tối thiểu 1 giây.";return;
+      }
+      if(maxRms<0.02){
+        orb.classList.remove("processing");
+        label.textContent="Không nghe thấy gì — hãy nói to và rõ hơn vào mic.";return;
+      }
+      try{
+        const fd=new FormData();
+        fd.append("audio",blob,"audio.webm");
+        fd.append("lang","vi");
+        // Send grammar point + cue word so Whisper biases vocabulary without
+        // leaking the answer. Backend builds a per-item prompt from these.
+        if(item.gp)              fd.append("gp",    item.gp);
+        if(item.scaffold?.point) fd.append("point", item.scaffold.point);
+        if(item.accept?.length)  fd.append("accept", JSON.stringify(item.accept));
+        const res=await fetch(API_BASE+"/api/transcribe",{method:"POST",body:fd});
+        const data=await res.json();
+        orb.classList.remove("processing");
+        const text=(data.text||"").trim();
+        if(text.length>=12){
+          await checkWithGroq(text);
+        }else if(text.length>0){
+          orb.classList.remove("processing");
+          label.textContent="Chưa nghe rõ — hãy nói to hơn và rõ hơn.";
+        }else{
+          orb.classList.remove("processing");
+          label.textContent="Chưa nghe rõ — hãy nói to hơn và rõ hơn.";
+        }
+      }catch(e){
+        // Network error — treat as "not heard", do NOT fallback to cached
+        // _lastVoice text which could pass the keyword check incorrectly.
+        orb.classList.remove("processing");
+        label.textContent="Có lỗi mạng — bấm để thử lại.";
+      }
+    };
+  }
+
+  function showTypeFallback(){
+    orb.style.display="none";
+    btns.innerHTML=`<input id="typed" placeholder="e.g. since → present perfect" style="font-family:'IBM Plex Mono';font-size:14px;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;width:260px;max-width:100%">
+      <button class="btn primary" id="sub">Check</button>`;
+    document.getElementById("sub").onclick=()=>checkWithGroq(document.getElementById("typed").value);
+  }
+
+  // ── Orb click: toggle record / stop ──────────────────────────────
+  orb.onclick=()=>{
+    if(orb._stop){orb._stop();return;}
+    recordAndTranscribe();
+  };
+
+  // ── Type fallback always available below orb ──────────────────────
+  btns.innerHTML=`<input id="typed" placeholder="Hoặc gõ lại quy tắc…" style="font-family:'IBM Plex Mono';font-size:13px;padding:9px 12px;border:1.5px solid var(--line);border-radius:10px;width:240px;max-width:100%;color:var(--ink)">
+    <button class="btn ghost" id="sub" style="font-size:13px;padding:10px 16px">Kiểm tra</button>`;
+  document.getElementById("sub").onclick=()=>{
+    const v=document.getElementById("typed").value.trim();
+    if(v)checkWithGroq(v);
+  };
+}
+
+// ---------------- RESULTS ----------------
+async function showDelayedResults(delayedRight){
+  setPhase("Kết quả sau 2 tuần");showStats(false);
+  const pct=Math.round(delayedRight/TEST.length*100);
+  try{
+    await fetch(API_BASE+"/api/session/complete",{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        group, participant_id:participantId, phase:"delayed",
+        preScore:0, postScore:delayedRight, practiceScore:0,
+        paas:{germane:null,extraneous:null}, attempts:[],
+      }),
+    });
+  }catch(e){ /* still show the learner's result */ }
+  root.innerHTML=`
+   <div class="scene">
+     <div class="eyebrow">Kiểm tra duy trì · sau 2 tuần</div>
+     <h1 style="font-size:clamp(26px,5vw,38px)">Bạn còn giữ được bao nhiêu?</h1>
+     <div class="scoregrid">
+       <div class="scell delayed"><div class="n">${pct}%</div><div class="l">Sau 2 tuần</div></div>
+     </div>
+     <p class="tiny">Cảm ơn bạn đã quay lại hoàn tất phần đo duy trì. Đây là dữ liệu quan trọng nhất của nghiên cứu.</p>
+   </div>`;
+}
+
+// Delayed post-test is real data, measured when the learner returns via ?delayed=<pid>.
+// Show only pre & post here; delayed cell is rendered by showDelayedResults().
+function results(){
+  setPhase("Kết quả");showStats(false);
+  const pre=Math.round(preScore/TEST.length*100),post=Math.round(postScore/TEST.length*100);
+  root.innerHTML=`
+   <div class="scene">
+     <div class="eyebrow">Báo cáo buổi luyện · ${group==="exp"?"nhóm nói to":"nhóm nhớ thầm"}</div>
+     <h1 style="font-size:clamp(26px,5vw,38px)">Bạn nhớ được bao nhiêu?</h1>
+     <div class="scoregrid" id="scoregrid">
+       <div class="scell"><div class="n">${pre}%</div><div class="l">Đầu vào</div></div>
+       <div class="scell"><div class="n">${post}%</div><div class="l">Kiểm tra cuối (now)</div></div>
+       <div class="scell delayed"><div class="n">—</div><div class="l">Sau 2 tuần (quay lại)</div></div>
+     </div>
+     <p class="tiny" style="margin-top:-14px;margin-bottom:10px">Điểm sau 2 tuần được đo bằng lượt làm bài thật qua link nhắc — không phải ước đoán.</p>
+     ${participantId?`<div class="nudge" style="margin-bottom:18px"><b>Link sau 2 tuần:</b><br><span id="delayedLink" style="word-break:break-all">${location.origin}/?delayed=${participantId}</span><div class="btnrow" style="justify-content:center;margin-top:10px"><button class="btn ghost" id="copyDelayed">Sao chép link</button></div></div>`:""}
+
+     <div class="paas">
+       <div class="pq">Mức nỗ lực bạn bỏ ra để thực sự hiểu quy tắc ngữ pháp trong buổi luyện? <span style="color:var(--go)">(germane load)</span></div>
+       <div class="scale" data-k="germane">${scaleBtns()}</div>
+       <div class="scaleends"><span>rất thấp (1)</span><span>rất cao (9)</span></div></div>
+     <div class="paas">
+       <div class="pq">Mức nỗ lực bị lãng phí vì giao diện khó dùng, xao nhãng, hoặc hướng dẫn không rõ? <span style="color:var(--stop)">(extraneous load)</span></div>
+       <div class="scale" data-k="extraneous">${scaleBtns()}</div>
+       <div class="scaleends"><span>rất thấp (1)</span><span>rất cao (9)</span></div></div>
+     <p class="tiny">Thang Paas 9 mức — giúp đo cảm giác tải nhận thức sau khi luyện.</p>
+     <div id="paasWarn" style="display:none;color:var(--stop);font-weight:700;font-size:14px;margin:6px 0 4px">Vui lòng chọn cả hai thang Paas trước khi gửi</div>
+     <div class="btnrow">
+       <button class="btn primary" id="submitBtn">Gửi & xem nhận xét →</button>
+       <button class="btn ghost" id="again">Luyện lại</button>
+     </div>
+
+     <div class="debrief-wrap" id="debriefWrap" style="display:none;margin-top:22px">
+       <div class="debrief-head">
+         <span class="debrief-logo">✦ Mentor TOEIC</span>
+         <span class="debrief-tag">Nhận xét cá nhân</span>
+       </div>
+       <div class="debrief-body" id="debriefBody">
+         <div class="debrief-loading"><span class="waiting"><i></i><i></i><i></i></span> Mentor đang đọc buổi luyện của bạn…</div>
+       </div>
+     </div>
+   </div>`;
+
+  const copyBtn=document.getElementById("copyDelayed");
+  if(copyBtn) copyBtn.onclick=async()=>{
+    const link=document.getElementById("delayedLink")?.textContent||"";
+    try{await navigator.clipboard.writeText(link);copyBtn.textContent="Đã sao chép";}catch(e){copyBtn.textContent="Copy thủ công link trên";}
+  };
+  root.querySelectorAll(".scale").forEach(sc=>sc.querySelectorAll(".sb").forEach(b=>b.onclick=()=>{
+    sc.querySelectorAll(".sb").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");paas[sc.dataset.k]=+b.textContent;
+    document.getElementById("paasWarn").style.display="none";}));
+  document.getElementById("again").onclick=intro;
+  document.getElementById("submitBtn").onclick=()=>{
+    // P0-C: block submit until BOTH Paas scales are answered.
+    if(paas.germane==null||paas.extraneous==null){
+      document.getElementById("paasWarn").style.display="block";
+      return;
+    }
+    const sb=document.getElementById("submitBtn");
+    sb.disabled=true;sb.textContent="Đang gửi…";
+    document.getElementById("debriefWrap").style.display="block";
+    _submitAndDebrief(pre, post);
+  };
+}
+
+async function _submitAndDebrief(pre, post) {
+  try {
+    // 1. Submit session
+    const res = await fetch(API_BASE + "/api/session/complete", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        group,
+        participant_id: participantId,
+        phase: "post",
+        preScore: Math.round(preScore),
+        postScore: Math.round(postScore),
+        practiceScore: score,
+        paas: {germane: paas.germane, extraneous: paas.extraneous},
+        attempts: _attempts,
+      }),
+    });
+    const {session_id} = await res.json();
+
+    // 2. Stream debrief via SSE
+    const body = document.getElementById("debriefBody");
+    if (!body) return;
+    body.innerHTML = "";
+
+    const evts = new EventSource(API_BASE + "/api/debrief/" + session_id);
+    let text = "";
+    evts.onmessage = (e) => {
+      if (e.data === "[DONE]") { evts.close(); _renderDebrief(body, text); return; }
+      try {
+        const {text: chunk} = JSON.parse(e.data);
+        text += chunk;
+        body.textContent = text;   // live update
+        body.scrollIntoView({behavior:"smooth",block:"nearest"});
+      } catch(_) {}
+    };
+    evts.onerror = () => {
+      evts.close();
+      if (!text) body.innerHTML = `<span style="color:var(--slate)">Mentor tạm thời chưa phản hồi — thử lại sau.</span>`;
+    };
+  } catch(e) {
+    const body = document.getElementById("debriefBody");
+    if (body) body.innerHTML = `<span style="color:var(--slate)">Không kết nối được Mentor (${e.message}).</span>`;
+  }
+}
+
+function _renderDebrief(el, md) {
+  // Minimal markdown → HTML: bold, line breaks
+  const html = md
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\n\n/g,"</p><p>")
+    .replace(/\n/g,"<br>");
+  el.innerHTML = `<p>${html}</p>`;
+}
+function scaleBtns(){let h="";for(let i=1;i<=9;i++)h+=`<button class="sb">${i}</button>`;return h;}
+
+// ---------------- RESEARCH MODE ----------------
+const researchHTML=`
+ <div class="research" id="researchPanel">
+   <div class="rhead">🔬 Chế độ nghiên cứu — what each mechanism maps to</div>
+   <div class="rbody">
+     <div class="rrow"><div class="rterm">Nhớ lại trước<br>(độ khó vừa đủ)</div><div class="rdesc">Quy tắc bị giấu cho đến khi bạn tự nói ra. Chính việc gọi lại từ trí nhớ mới tạo dấu vết bền.</div></div>
+     <div class="rrow"><div class="rterm">Hiệu ứng nói ra<br>(MacLeod 2010)</div><div class="rdesc">Nhóm nói to đọc quy tắc thành tiếng; nhóm nhớ thầm chỉ nghĩ trong đầu. Biến khác biệt duy nhất là hành động nói.</div></div>
+     <div class="rrow"><div class="rterm">Tự giải thích<br>(Chi 1994)</div><div class="rdesc">Bạn tự bắt lỗi và gọi tên quy tắc — chỉ nói "đáp án B" sẽ bị từ chối để buộc bạn giải thích.</div></div>
+     <div class="rrow"><div class="rterm">Gợi ý từng bước / ZPD<br>(Vygotsky)</div><div class="rdesc">Gợi ý chỉ mở khi bạn thật sự cần: sai một lần thì gợi ý nhẹ, sai hai lần mới mở quy tắc đầy đủ.</div></div>
+     <div class="rrow"><div class="rterm">Chuyển hóa<br>(gặp lại câu mới)</div><div class="rdesc">Câu sai sẽ quay lại dưới dạng câu mới cùng quy tắc, kiểm tra bạn có thật sự chuyển hóa được không.</div></div>
+     <div class="rrow"><div class="rterm">Tải nhận thức<br>(Sweller 1988)</div><div class="rdesc">Một màn hình, một nhiệm vụ, phản hồi nhanh → giảm tải thừa. Phần khó là nhớ lại có chủ đích.</div></div>
+   </div>
+   <div class="rbody" style="padding-top:0"><button class="btn ghost" id="closeR" style="width:100%">Đóng chế độ nghiên cứu</button></div>
+ </div>`;
+let researchOpen=false;
+document.getElementById("infoBtn").onclick=()=>{
+  if(researchOpen){document.getElementById("researchPanel").remove();researchOpen=false;return;}
+  const div=document.createElement("div");div.innerHTML=researchHTML;root.prepend(div.firstElementChild);researchOpen=true;
+  document.getElementById("closeR").onclick=()=>{document.getElementById("researchPanel").remove();researchOpen=false;};
+  window.scrollTo({top:0,behavior:"smooth"});
+};
+
+const _params = new URLSearchParams(location.search);
+const _delayedPid = (_params.get("delayed")||"").trim().toUpperCase();
+if(_delayedPid){ startDelayed(_delayedPid); }
+else { intro(); }
+</script>
+</body>
+</html>

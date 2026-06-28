@@ -1229,25 +1229,23 @@ function results(){
   const pre=Math.round(preScore/TEST.length*100),post=Math.round(postScore/TEST.length*100);
   root.innerHTML=`
    <div class="scene">
-     <div class="eyebrow">Báo cáo buổi luyện · ${group==="exp"?"nhóm nói to":"nhóm nhớ thầm"}</div>
-     <h1 style="font-size:clamp(26px,5vw,38px)">Bạn nhớ được bao nhiêu?</h1>
+      <div class="eyebrow">Báo cáo buổi học</div>
+     <h1 style="font-size:clamp(26px,5vw,38px)">Kết quả của bạn</h1>
      <div class="scoregrid" id="scoregrid">
-       <div class="scell"><div class="n">${pre}%</div><div class="l">Đầu vào</div></div>
-       <div class="scell"><div class="n">${post}%</div><div class="l">Kiểm tra cuối (now)</div></div>
-       <div class="scell delayed"><div class="n">—</div><div class="l">Sau 2 tuần (quay lại)</div></div>
+       <div class="scell"><div class="n">${pre}%</div><div class="l">Điểm ban đầu</div></div>
+       <div class="scell"><div class="n">${post}%</div><div class="l">Điểm sau khi luyện</div></div>
+       <div class="scell delayed"><div class="n" style="font-size:24px">Chưa có kết quả</div><div class="l">Điểm sau 2 tuần</div></div>
      </div>
-     <p class="tiny" style="margin-top:-14px;margin-bottom:10px">Điểm sau 2 tuần được đo bằng lượt làm bài thật qua link nhắc — không phải ước đoán.</p>
-     ${participantId?`<div class="nudge" style="margin-bottom:18px"><b>Link sau 2 tuần:</b><br><span id="delayedLink" style="word-break:break-all">${location.origin}/?delayed=${participantId}</span><div class="btnrow" style="justify-content:center;margin-top:10px"><button class="btn ghost" id="copyDelayed">Sao chép link</button></div></div>`:""}
+     ${participantId?`<div class="nudge" style="margin-bottom:18px"><b>Link kiểm tra sau 2 tuần:</b><br><span id="delayedLink" style="word-break:break-all">${location.origin}/?delayed=${participantId}</span></div>`:""}
 
      <div class="paas">
-       <div class="pq">Mức nỗ lực bạn bỏ ra để thực sự hiểu quy tắc ngữ pháp trong buổi luyện? <span style="color:var(--go)">(germane load)</span></div>
+       <div class="pq">Bạn đã cố gắng đến mức nào để thật sự hiểu quy tắc ngữ pháp trong buổi luyện này?</div>
        <div class="scale" data-k="germane">${scaleBtns()}</div>
-       <div class="scaleends"><span>rất thấp (1)</span><span>rất cao (9)</span></div></div>
+       <div class="scaleends"><span>rất ít</span><span>rất nhiều</span></div></div>
      <div class="paas">
-       <div class="pq">Mức nỗ lực bị lãng phí vì giao diện khó dùng, xao nhãng, hoặc hướng dẫn không rõ? <span style="color:var(--stop)">(extraneous load)</span></div>
+       <div class="pq">Bạn có bị mất tập trung vì giao diện hoặc hướng dẫn khó hiểu không?</div>
        <div class="scale" data-k="extraneous">${scaleBtns()}</div>
-       <div class="scaleends"><span>rất thấp (1)</span><span>rất cao (9)</span></div></div>
-     <p class="tiny">Thang Paas 9 mức — giúp đo cảm giác tải nhận thức sau khi luyện.</p>
+       <div class="scaleends"><span>rất ít</span><span>rất nhiều</span></div></div>
      <div id="paasWarn" style="display:none;color:var(--stop);font-weight:700;font-size:14px;margin:6px 0 4px">Vui lòng chọn cả hai thang Paas trước khi gửi</div>
      <div class="btnrow">
        <button class="btn primary" id="submitBtn">Gửi & xem nhận xét →</button>
@@ -1290,7 +1288,7 @@ function results(){
   const existingSid = participantId ? localStorage.getItem("toeic_session_id_" + participantId) : null;
   if (existingSid) {
     const sb=document.getElementById("submitBtn");
-    sb.disabled=true;sb.textContent="Đã gửi — đang mở nhận xét…";
+    sb.disabled=true;sb.textContent="Đã gửi. Đang mở nhận xét…";
     document.getElementById("debriefWrap").style.display="block";
     _streamDebrief(existingSid);
   }

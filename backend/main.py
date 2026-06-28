@@ -35,9 +35,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Simple rate-limit (10 req/min per IP) ──────────────────────────────
+# ── Simple rate-limit (100 req/min per IP) ─────────────────────────────
 _rate: dict[str, list[float]] = {}
-def _check_rate(ip: str, limit: int = 10, window: int = 60) -> bool:
+def _check_rate(ip: str, limit: int = 100, window: int = 60) -> bool:
     now = time.time()
     bucket = _rate.setdefault(ip, [])
     while bucket and bucket[0] < now - window:

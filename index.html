@@ -1299,23 +1299,54 @@ function results(){
 function _streamDebrief(session_id) {
   const body = document.getElementById("debriefBody");
   if (!body || !session_id) return;
-  body.innerHTML = "";
+  body.innerHTML = `<div class="debrief-loading"><span class="waiting"><i></i><i></i><i></i></span> Mentor đang đọc buổi luyện của bạn…</div>`;
 
-  const evts = new EventSource(API_BASE + "/api/debrief/" + session_id);
   let text = "";
-  evts.onmessage = (e) => {
-    if (e.data === "[DONE]") { evts.close(); _renderDebrief(body, text); return; }
+  let gotChunk = false;
+  let evts = null;
+
+  const renderChunk = (chunk) => {
+    gotChunk = true;
+    text += chunk;
+    body.textContent = text;
+    body.scrollIntoView({behavior:"smooth",block:"nearest"});
+  };
+
+  const fallbackFetch = async () => {
+    if (gotChunk) return;
     try {
-      const {text: chunk} = JSON.parse(e.data);
-      text += chunk;
-      body.textContent = text;   // live update
-      body.scrollIntoView({behavior:"smooth",block:"nearest"});
-    } catch(_) {}
+      if (evts) evts.close();
+      const raw = await fetch(API_BASE + "/api/debrief/" + session_id, {cache:"no-store"}).then(r=>r.text());
+      let full = "";
+      raw.split(/
+/).forEach(line => {
+        if (!line.startsWith("data: ")) return;
+        const d = line.slice(6).trim();
+        if (!d || d === "[DONE]") return;
+        try { full += JSON.parse(d).text || ""; } catch(_) {}
+      });
+      if (full) _renderDebrief(body, full);
+      else body.innerHTML = `<span style="color:var(--slate)">Mentor chưa trả nội dung — thử tải lại trang.</span>`;
+    } catch(e) {
+      body.innerHTML = `<span style="color:var(--slate)">Không kết nối được Mentor (${e.message}).</span>`;
+    }
   };
-  evts.onerror = () => {
-    evts.close();
-    if (!text) body.innerHTML = `<span style="color:var(--slate)">Mentor tạm thời chưa phản hồi — thử lại sau.</span>`;
-  };
+
+  try {
+    evts = new EventSource(API_BASE + "/api/debrief/" + session_id);
+    const fallbackTimer = setTimeout(fallbackFetch, 2500);
+    evts.onmessage = (e) => {
+      if (e.data === "[DONE]") { clearTimeout(fallbackTimer); evts.close(); _renderDebrief(body, text); return; }
+      try { renderChunk(JSON.parse(e.data).text || ""); } catch(_) {}
+    };
+    evts.onerror = () => {
+      clearTimeout(fallbackTimer);
+      evts.close();
+      if (!gotChunk) fallbackFetch();
+    };
+  } catch(_) {
+    fallbackFetch();
+  }
 }
 
 async function _submitAndDebrief(pre, post) {

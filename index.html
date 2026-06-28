@@ -472,8 +472,46 @@ function intro(){
         await enrollAdmin();
       } else {
         await ensureEnrolled("P" + raw);
-        if (localStorage.getItem(`toeic_demo_done_${participantId}`)) {
-          // demographics already submitted — skip straight to pre-test
+        // Resume to correct phase — check localStorage first, fallback to server
+        let sid      = localStorage.getItem("toeic_session_id_" + participantId);
+        let postDone = localStorage.getItem("toeic_post_done_"  + participantId);
+        let preDone  = localStorage.getItem("toeic_pre_done_"   + participantId);
+        const demoDone = localStorage.getItem("toeic_demo_done_" + participantId);
+        const savedGrp = localStorage.getItem("toeic_group_"     + participantId);
+        if (savedGrp) group = savedGrp;
+        // If localStorage missing milestones, ask server for current status
+        if (demoDone && !postDone) {
+          try {
+            const st = await fetch(API_BASE + "/api/status/" + participantId).then(r=>r.json());
+            if (st && st.group) group = st.group;
+            if (st && st.session_id) {
+              sid = st.session_id;
+              postDone = "1";
+              preDone  = "1";
+              preScore  = st.pre_score  || 0;
+              postScore = st.post_score || 0;
+              score     = st.practice_score || 0;
+              // backfill localStorage so next reload is instant
+              localStorage.setItem("toeic_session_id_" + participantId, sid);
+              localStorage.setItem("toeic_post_done_"  + participantId, "1");
+              localStorage.setItem("toeic_pre_done_"   + participantId, "1");
+              localStorage.setItem("toeic_group_"      + participantId, group);
+              localStorage.setItem("toeic_scores_"     + participantId, JSON.stringify({pre: preScore, post: postScore, practice: score}));
+            }
+          } catch(_) {}
+        }
+        if (postDone && sid) {
+          // Already completed — restore scores and show results/debrief
+          if (!preScore && !postScore) {
+            try {
+              const sc = JSON.parse(localStorage.getItem("toeic_scores_" + participantId) || "{}");
+              preScore = sc.pre || 0; postScore = sc.post || 0; score = sc.practice || 0;
+            } catch(_) {}
+          }
+          results();
+        } else if (preDone) {
+          startPractice();
+        } else if (demoDone) {
           startTest("pre");
         } else {
           showDemographicsSurvey();
@@ -705,6 +743,8 @@ async function assignThenPractice(){
     const data=await res.json();
     if(data&&(data.group==="exp"||data.group==="ctrl")) group=data.group;
   }catch(e){ /* offline: fall back to current `group` default so the session can continue */ }
+  localStorage.setItem("toeic_pre_done_" + participantId, "1");
+  localStorage.setItem("toeic_group_" + participantId, group);
   startPractice();
 }
 
@@ -1265,6 +1305,9 @@ async function _submitAndDebrief(pre, post) {
       }),
     });
     const {session_id} = await res.json();
+    localStorage.setItem("toeic_session_id_" + participantId, session_id);
+    localStorage.setItem("toeic_post_done_" + participantId, "1");
+    localStorage.setItem("toeic_scores_" + participantId, JSON.stringify({pre: Math.round(preScore), post: Math.round(postScore), practice: score}));
 
     // 2. Stream debrief via SSE
     const body = document.getElementById("debriefBody");

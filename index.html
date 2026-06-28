@@ -1318,8 +1318,7 @@ function _streamDebrief(session_id) {
       if (evts) evts.close();
       const raw = await fetch(API_BASE + "/api/debrief/" + session_id, {cache:"no-store"}).then(r=>r.text());
       let full = "";
-      raw.split(/
-/).forEach(line => {
+      raw.split(/\r?\n/).forEach(line => {
         if (!line.startsWith("data: ")) return;
         const d = line.slice(6).trim();
         if (!d || d === "[DONE]") return;

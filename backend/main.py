@@ -817,7 +817,7 @@ Write a concise personal debrief (max 180 Vietnamese words) with these 4 parts:
 1. **Bạn làm tốt ở đâu** — 1 sentence acknowledging strengths
 2. **Bạn trượt ở đâu** — name each grammar rule that caused errors, explain WHY it's tricky in 1 line each
 3. **Khoảng cách quan trọng** — 1 insight about what the pre→post delta tells us
-4. **Việc cần làm ngày mai** — one specific practice action (e.g. "Viết 3 câu dùng 'a number of + plural verb' trong email công việc")
+4. **Việc cần làm ngày mai** — one specific silent writing/recognition practice action only (e.g. "Viết 3 câu dùng 'a number of + plural verb' trong email công việc"). Do NOT tell the learner to read aloud, speak aloud, or use voice practice.
 
 Tone: direct, encouraging, student-friendly, no fluff. Use short paragraphs.
 Do NOT start with generic praise like "Làm tốt lắm"."""

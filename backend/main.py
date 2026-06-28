@@ -908,7 +908,9 @@ async def get_status(participant_id: str):
         return JSONResponse({"error": "not found"}, status_code=404)
     row = conn.execute(
         "SELECT id, pre_score, post_score, practice_score, phase FROM sessions "
-        "WHERE participant_id=? ORDER BY created_at DESC LIMIT 1",
+        "WHERE participant_id=? "
+        "ORDER BY CASE WHEN debrief IS NOT NULL AND debrief<>'' THEN 0 ELSE 1 END, "
+        "created_at DESC LIMIT 1",
         (participant_id,)
     ).fetchone()
     conn.close()

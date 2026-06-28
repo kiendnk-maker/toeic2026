@@ -472,7 +472,12 @@ function intro(){
         await enrollAdmin();
       } else {
         await ensureEnrolled("P" + raw);
-        showDemographicsSurvey();
+        if (localStorage.getItem(`toeic_demo_done_${participantId}`)) {
+          // demographics already submitted — skip straight to pre-test
+          startTest("pre");
+        } else {
+          showDemographicsSurvey();
+        }
       }
     } catch (e) {
       pidHint.textContent = e.message || "Có lỗi — thử lại.";

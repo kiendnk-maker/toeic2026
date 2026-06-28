@@ -924,6 +924,19 @@ async def get_status(participant_id: str):
     }
 
 
+@app.get("/api/debrief_text/{session_id}")
+async def get_debrief_text(session_id: str):
+    """Return cached debrief as JSON for browsers/proxies that fail SSE."""
+    conn = sqlite3.connect(DB_PATH)
+    row = conn.execute("SELECT debrief FROM sessions WHERE id=?", (session_id,)).fetchone()
+    conn.close()
+    if not row:
+        return JSONResponse({"error": "Session not found"}, status_code=404)
+    if not row[0]:
+        return JSONResponse({"error": "Debrief not ready"}, status_code=404)
+    return {"text": row[0]}
+
+
 @app.get("/api/debrief/{session_id}")
 async def get_debrief(session_id: str):
     conn = sqlite3.connect(DB_PATH)

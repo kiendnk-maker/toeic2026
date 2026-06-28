@@ -1316,15 +1316,8 @@ function _streamDebrief(session_id) {
     if (gotChunk) return;
     try {
       if (evts) evts.close();
-      const raw = await fetch(API_BASE + "/api/debrief/" + session_id, {cache:"no-store"}).then(r=>r.text());
-      let full = "";
-      raw.split(/\r?\n/).forEach(line => {
-        if (!line.startsWith("data: ")) return;
-        const d = line.slice(6).trim();
-        if (!d || d === "[DONE]") return;
-        try { full += JSON.parse(d).text || ""; } catch(_) {}
-      });
-      if (full) _renderDebrief(body, full);
+      const data = await fetch(API_BASE + "/api/debrief_text/" + session_id, {cache:"no-store"}).then(r=>r.json());
+      if (data && data.text) _renderDebrief(body, data.text);
       else body.innerHTML = `<span style="color:var(--slate)">Mentor chưa trả nội dung — thử tải lại trang.</span>`;
     } catch(e) {
       body.innerHTML = `<span style="color:var(--slate)">Không kết nối được Mentor (${e.message}).</span>`;

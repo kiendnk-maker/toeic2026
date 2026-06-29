@@ -902,7 +902,8 @@ async def get_status(participant_id: str):
     """Return the latest completed session for a participant (for resume logic)."""
     conn = sqlite3.connect(DB_PATH)
     p = conn.execute(
-        "SELECT group_type FROM participants WHERE participant_id=?", (participant_id,)
+        "SELECT group_type, pre_total, age, gender, years_english, toeic_exp FROM participants WHERE participant_id=?",
+        (participant_id,),
     ).fetchone()
     if not p:
         conn.close()
@@ -915,11 +916,17 @@ async def get_status(participant_id: str):
         (participant_id,)
     ).fetchone()
     conn.close()
-    if not row:
-        return {"phase": "pre", "group": p[0], "session_id": None}
-    return {
-        "phase": row[4] or "post",
+    base = {
         "group": p[0],
+        "pre_total": p[1],
+        "demo_done": all(v is not None and v != "" for v in p[2:6]),
+    }
+    if not row:
+        phase = "practice" if p[0] in ("exp", "ctrl") and p[1] is not None else "pre"
+        return {**base, "phase": phase, "session_id": None}
+    return {
+        **base,
+        "phase": row[4] or "post",
         "session_id": row[0],
         "pre_score": row[1],
         "post_score": row[2],

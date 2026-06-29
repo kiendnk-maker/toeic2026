@@ -472,18 +472,27 @@ function intro(){
         await enrollAdmin();
       } else {
         await ensureEnrolled("P" + raw);
-        // Resume to correct phase — check localStorage first, fallback to server
+        // Resume to correct phase — localStorage first, server fallback for other devices.
         let sid      = localStorage.getItem("toeic_session_id_" + participantId);
         let postDone = localStorage.getItem("toeic_post_done_"  + participantId);
         let preDone  = localStorage.getItem("toeic_pre_done_"   + participantId);
-        const demoDone = localStorage.getItem("toeic_demo_done_" + participantId);
-        const savedGrp = localStorage.getItem("toeic_group_"     + participantId);
+        let demoDone = localStorage.getItem("toeic_demo_done_"  + participantId);
+        const savedGrp = localStorage.getItem("toeic_group_"    + participantId);
         if (savedGrp) group = savedGrp;
-        // If localStorage missing milestones, ask server for current status
-        if (demoDone && !postDone) {
+        if (!postDone) {
           try {
-            const st = await fetch(API_BASE + "/api/status/" + participantId).then(r=>r.json());
+            const st = await fetch(API_BASE + "/api/status/" + participantId, {cache:"no-store"}).then(r=>r.json());
             if (st && st.group) group = st.group;
+            if (st && st.demo_done) {
+              demoDone = "1";
+              localStorage.setItem("toeic_demo_done_" + participantId, "1");
+            }
+            if (st && st.pre_total != null && !preDone) {
+              preDone = "1";
+              preScore = st.pre_total;
+              localStorage.setItem("toeic_pre_done_" + participantId, "1");
+              localStorage.setItem("toeic_group_" + participantId, group);
+            }
             if (st && st.session_id) {
               sid = st.session_id;
               postDone = "1";
@@ -491,7 +500,6 @@ function intro(){
               preScore  = st.pre_score  || 0;
               postScore = st.post_score || 0;
               score     = st.practice_score || 0;
-              // backfill localStorage so next reload is instant
               localStorage.setItem("toeic_session_id_" + participantId, sid);
               localStorage.setItem("toeic_post_done_"  + participantId, "1");
               localStorage.setItem("toeic_pre_done_"   + participantId, "1");
@@ -604,6 +612,12 @@ async function ensureEnrolled(requestedId){
       body: JSON.stringify(requestedId ? {participant_id: requestedId} : {}),
     });
     const data = await res.json();
+    if (!res.ok && res.status === 409 && requestedId) {
+      // Existing participant: allow resume from another device/browser.
+      participantId = requestedId.toUpperCase();
+      localStorage.setItem("toeic_pid", participantId);
+      return participantId;
+    }
     if (data && data.participant_id){
       participantId = data.participant_id;
       localStorage.setItem("toeic_pid", participantId);
